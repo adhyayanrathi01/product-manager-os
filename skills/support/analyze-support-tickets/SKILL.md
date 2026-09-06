@@ -5,12 +5,14 @@ description: "Analyze recent or scoped support tickets to identify recurring pro
 
 # Analyze Support Tickets
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the decision, source ID, allowed queue or record scope, absolute period, product area or topic, segment, deduplication unit, and privacy or retention boundary.
 - Verify read authorization and source coverage. If access or classification is partial, analyze only retrieved tickets and label the missing scope.
 - Block requests outside the permitted scope and avoid prevalence claims without a defensible customer or account denominator.
 - Emit the shared evidence handoff for reusable findings.
+<!-- CORE:END -->
 
 ## Process
 
@@ -32,6 +34,7 @@ description: "Analyze recent or scoped support tickets to identify recurring pro
 11. Present evidence and implications to the PM. Do not prioritize the roadmap or modify tickets without explicit direction.
 12. Save the analysis using skills/evidence/evidence-handoff.md, then update the relevant project and root work files when the work is meaningful.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide:
@@ -47,3 +50,8 @@ Provide:
 - Recommended follow-up evidence, clearly labeled as recommendations
 
 Do not interpret ticket volume alone as customer prevalence or product impact.
+
+**Required fields:** Scope and source coverage|Data-cleaning and deduplication notes|Taxonomy changes|Theme table|Representative evidence|Emerging issues|Workarounds and resolution gaps|Implications for the PM|Recommended follow-up evidence
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh analyze-support-tickets <artifact>`.
+<!-- CORE:END -->

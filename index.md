@@ -7,6 +7,9 @@
 | README.md | First-read explanation, onboarding, and operating model |
 | setup.sh | Network-free bootstrap, package validation, and repo-local skill discovery |
 | AGENTS.md | Canonical rules for agents |
+| CHARTER.md | Immutable clauses no skill or self-edit may contradict |
+| CHANGELOG.md | What changed in each version |
+| core.sha256 | Integrity manifest over every immutable core region |
 | CLAUDE.md | Claude import of the canonical rules |
 | SETUP.md | Conversational first-use setup process |
 | context.md | Stable product context and external source pointers |
@@ -17,6 +20,7 @@
 | CONTRIBUTING.md | Contribution, contract, safety, and evaluation requirements |
 | VERSION | Current semantic version |
 | docs/plans/ | Approved architecture and implementation designs |
+| evals/ | Behavioral scenarios, evaluator protocol, and the deterministic guardrail checks |
 
 ## Skill buckets
 
@@ -41,6 +45,8 @@
 | --- | --- |
 | skills/evidence/evidence-handoff.md | Evidence packet contract |
 | skills/learning/improve-skills/references/improvement-payload.md | Manual and automatic improvement input contract |
+| evals/check-output.sh | Verifies an artifact against the output contract its skill declares |
+| evals/test-guardrails.sh | Self-check that every guardrail fails when it should |
 
 ## Projects
 

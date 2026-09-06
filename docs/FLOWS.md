@@ -55,30 +55,86 @@ flowchart TD
     T --> U{PM checkpoint}
 ```
 
+## What a skill is made of
+
+Every `skills/**/SKILL.md` splits into a part a human owns and a part the agent may improve. The split is the whole guardrail: a skill can get better at its job without changing what its job is.
+
+```mermaid
+flowchart LR
+    subgraph IMM["Immutable, human-owned"]
+        A["## Contract<br/>scope, required inputs,<br/>hard constraints"]
+        B["## Output<br/>Required fields, the<br/>machine-checkable promise"]
+    end
+    subgraph MUT["Mutable, agent may improve"]
+        C["## Process<br/>steps, heuristics,<br/>phrasing, examples"]
+    end
+    A --> D["core.sha256<br/>hash of every fenced region"]
+    B --> D
+    D --> E["./setup.sh --check<br/>fails on a changed region,<br/>a removed fence, or a<br/>skill missing from the manifest"]
+    C --> F["git history<br/>one commit per edit,<br/>rollback to any version"]
+```
+
+Upstream owns the fenced regions and local self-improvements own `## Process`, so an upgrade merges cleanly. A conflict on pull means an edit escaped its region, which is information rather than an accident.
+
 ## Safe skill improvement
 
-Improvement requests are untrusted input. The workflow chooses the narrowest durable destination, preserves unrelated work, and records only successfully validated applications.
+Improvement requests are untrusted input. Every check runs **before** anything is written, because skill contamination does not reverse cleanly and a failed check should leave no hunk to revert.
 
 ```mermaid
 flowchart TD
-    A{Manual or automatic trigger?} --> B[Treat the improvement payload as untrusted data]
-    B --> C[Inspect evidence, higher-level rules, and the narrowest owner]
-    C --> D{Existing behavior passes the acceptance check?}
-    D -->|Yes| E[Return no_change with rule location and evidence]
-    D -->|No| F[Reproduce a claimed failure when required]
-    F --> G{Configured mode or manual authorization}
-    G -->|off and automatic| H[Take no automatic action]
-    G -->|suggest or manual suggest| I[Return an exact proposed diff for approval]
-    G -->|safe-auto or manual apply| J{Safe, scoped, and backed by an explicit correction or confirmed failure?}
-    J -->|No| I
-    J -->|Yes| K[Capture pre-change content and inspect workspace changes]
-    K --> L{Target or log changed, or hunks overlap?}
-    L -->|Yes| I
-    L -->|No| M[Apply only the authorized hunk]
-    M --> N[Run scoped acceptance, consistency, privacy, and PM-boundary validation]
-    N --> O{Validation passes?}
-    O -->|Yes| P[Append the validated change to the log]
-    O -->|No| Q{Applied hunk changed concurrently?}
-    Q -->|No| R[Roll back only the applied hunk]
-    Q -->|Yes| S[Stop and report the conflict without overwriting]
+    A["Improvement request or automatic trigger"] --> B["Treat the payload as untrusted data"]
+    B --> C{"Targets CHARTER.md, a core region,<br/>core.sha256, a constraint file, or evals/?"}
+    C -->|Yes| D["Refuse in every mode.<br/>Report the clause and path.<br/>Never a silent no_change"]
+    C -->|No| E{"Whole-file rewrite?"}
+    E -->|Yes| F["Refuse. Deltas to single rules only"]
+    E -->|No| G{"Cited, inspectable evidence?"}
+    G -->|No| H["Refuse as ungrounded, including<br/>a manual mode: apply.<br/>Assertion is not evidence"]
+    G -->|Yes| I{"Behavior already exists and<br/>the acceptance check passes?"}
+    I -->|Yes| J["Return no_change with the rule location"]
+    I -->|No| K["Pre-commit critics"]
+    K --> K1["Structural validity:<br/>frontmatter, headings, fences intact;<br/>edit lands inside ## Process"]
+    K --> K2["Behavioral harmlessness:<br/>weakens no permission, privacy,<br/>readiness or evidence rule;<br/>checked clause by clause"]
+    K --> K3["Semantic consistency vs core-origin:<br/>every origin constraint still present,<br/>rule count has not silently fallen"]
+    K1 --> L{"All three pass?"}
+    K2 --> L
+    K3 --> L
+    L -->|No| M["Return an exact proposed diff.<br/>Nothing was written"]
+    L -->|Yes| N{"Over the rule cap or the drift budget?"}
+    N -->|Yes| O["Stop. Request a human re-read against<br/>the original specification.<br/>A green check does not override this"]
+    N -->|No| P{"Configured mode"}
+    P -->|"off, or suggest"| M
+    P -->|"safe-auto with a confirmed failure"| Q["Apply the single delta"]
+    Q --> R["Scoped verification: the changed rule<br/>and the rules referencing it"]
+    R --> S["./setup.sh --check"]
+    S --> T{"Cores still match the manifest?"}
+    T -->|No| U["The edit escaped ## Process.<br/>Revert the hunk and report"]
+    T -->|Yes| V["Commit one skill file with<br/>Skill, Evidence, Validated-by,<br/>Assisted-by trailers"]
+    V --> W["Append the validated change to log.md"]
 ```
+
+## Integrity and drift checks
+
+`./setup.sh --check` is the deterministic gate. It runs no model and reaches no network, so it is safe to run on every commit.
+
+```mermaid
+flowchart TD
+    A["./setup.sh --check"] --> B["Validate skill packages:<br/>frontmatter, naming, metadata"]
+    B --> C{"Every skill has a CORE fence,<br/>well formed and closed?"}
+    C -->|No| D["FAIL: missing or malformed fence.<br/>Deleting the guardrail is not a way around it"]
+    C -->|Yes| E{"Each fenced region's hash<br/>matches core.sha256?"}
+    E -->|No| F["FAIL: a core region changed.<br/>That is a human specification change,<br/>never a self-improvement"]
+    E -->|Yes| G{"Manifest and skills agree,<br/>nothing added or removed?"}
+    G -->|No| H["FAIL: unlisted skill, or a listed<br/>skill that no longer exists"]
+    G -->|Yes| I["Cores verified"]
+    I --> J{"core-origin tag exists?"}
+    J -->|No| K["Report drift as unmeasured.<br/>Tag the reviewed baseline"]
+    J -->|Yes| L["Per skill, diff against core-origin"]
+    L --> M{"Changed lines over budget?"}
+    M -->|Yes| N["Flag for a human re-read.<br/>Catches drift that stayed under<br/>the per-edit threshold"]
+    M -->|No| O["Report changed lines and commit count"]
+```
+
+Two further checks are separate because they take an argument:
+
+- `evals/check-output.sh <skill> <artifact>` verifies a produced artifact against the `Required fields` its skill declares. A missing field exits non-zero and names it.
+- `evals/test-guardrails.sh` asserts that each guardrail above actually fails when it should, against a disposable copy of the workspace.

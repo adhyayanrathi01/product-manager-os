@@ -47,3 +47,31 @@ Before submitting:
 3. Run the relevant validation cases, including a forward test for substantial or safety-sensitive changes.
 4. Run `git diff --check` and remove placeholders, generated caches, secrets, and unrelated edits.
 5. Confirm existing skills remain provider-neutral and existing project data is preserved.
+
+## Immutable core regions
+
+The region between `<!-- CORE:BEGIN -->` and `<!-- CORE:END -->` in any `SKILL.md` is a specification change, not an improvement. To change one:
+
+1. Edit the region by hand and explain why in the commit body.
+2. Regenerate the manifest with `./setup.sh --core-hash > core.sha256`.
+3. Read the resulting diff. A manifest change with no reviewed core change is the signature of a guardrail being worked around.
+4. Bump the minor version in `VERSION` and add a `CHANGELOG.md` entry.
+
+Amending `CHARTER.md` follows the same path and always bumps the minor version.
+
+## Self-improvement commits
+
+- One commit per edit, touching exactly one `SKILL.md`.
+- Record provenance in trailers: `Skill:`, `Evidence:`, `Validated-by:`, `Assisted-by:`.
+
+  Trailers must be one contiguous block at the very end of the message, with no blank line between them. Passing each as a separate `git commit -m` creates separate paragraphs, and git then parses none of them as trailers. The commit still looks correct in `git log`, which is what makes the mistake easy to miss. Write the message with `-F -` or an editor:
+
+        printf 'improve: rank by unique accounts\n\nTicket volume overstated prevalence.\n\nSkill: analyze-support-tickets\nEvidence: SUPPORT-DEDUP-07\nValidated-by: acceptance check pass\nAssisted-by: <runtime>\n' | git commit -F -
+
+  Verify a trailer actually parsed before relying on it:
+
+        git log -1 --format='%(trailers:key=Evidence,valueonly)'
+
+  Empty output means the trailer was not recorded, whatever the message looks like.
+- Use merge commits on this path. A squash or rebase collapses per-edit granularity and destroys the rollback target.
+- Run `./setup.sh --check` and `evals/test-guardrails.sh` before proposing a change to any guardrail.

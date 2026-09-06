@@ -5,11 +5,13 @@ description: "Analyze meeting notes, transcripts, recordings, calendars, or summ
 
 # Analyze Meetings
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the decision, source ID, permitted meeting scope, participant boundary, absolute period, topic, and confidentiality or retention rules.
 - Verify authorization, source coverage, chronology, and speaker clarity. If records are partial, limit conclusions to reviewed meetings and name missing coverage.
 - Block access outside the permitted scope. Emit the shared evidence handoff for reusable findings.
+<!-- CORE:END -->
 
 ## Process
 
@@ -37,6 +39,7 @@ description: "Analyze meeting notes, transcripts, recordings, calendars, or summ
 10. Present findings for PM review. Do not send summaries, schedule follow-ups, or create tasks without explicit approval.
 11. Save the analysis using skills/evidence/evidence-handoff.md, then update the relevant project and root work files when meaningful.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide:
@@ -53,3 +56,8 @@ Provide:
 - Implications and follow-up options for the PM
 
 Do not treat discussion, silence, or attendance as approval.
+
+**Required fields:** Scope and meetings reviewed|Coverage validation|Decision log|Evidence and assumptions|Objections and risks|Action items|Unresolved questions|Implications for the PM
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh analyze-meetings <artifact>`.
+<!-- CORE:END -->

@@ -1,0 +1,32 @@
+diff --git a/context.md b/context.md
+--- a/context.md
++++ b/context.md
+@@ -147,7 +147,7 @@
+ 
+ ## Self-improvement
+ 
+-- Mode: suggest
++- Mode: safe-auto
+ - Allowed automatic scope: Existing skills and folder rules, when supported by an explicit reusable correction or a confirmed failed acceptance check
+ - Approval required for: New files, dependencies, scripts, external actions, permission or security changes, destructive actions, inferred broad changes
+ 
+diff --git a/skills/meetings/analyze-meetings/SKILL.md b/skills/meetings/analyze-meetings/SKILL.md
+--- a/skills/meetings/analyze-meetings/SKILL.md
++++ b/skills/meetings/analyze-meetings/SKILL.md
+@@ -20,7 +20,7 @@ description: "Analyze meeting notes, transcripts, recordings, calendars, or summ
+    - participant group.
+    Resolve relative periods to absolute dates and a timezone. Clarify fiscal versus calendar quarters.
+ 2. Discover available notes, transcripts, recordings, calendars, or documents through an MCP, CLI, API, export, or local file.
+-3. Confirm permission to access confidential meetings and record the permitted retention or reuse boundary. Record source coverage and identify missing meetings, partial transcripts, or unclear speakers. Track separate counts for records discovered, permitted and accessed, successfully parsed, and actually analyzed; analyze only successfully parsed records.
++3. Confirm permission to access confidential meetings and record the permitted retention or reuse boundary. Record source coverage and identify missing meetings, partial transcripts, or unclear speakers.
+ 4. Separate:
+    - confirmed decisions;
+    - proposals and alternatives;
+@@ -42,7 +42,6 @@ Provide:
+ 
+ - Scope and meetings reviewed
+-- Coverage validation showing all four stage counts and confirming inaccessible or failed records are not labeled reviewed
+ - Concise meeting-by-meeting summary when useful
+ - Decision log
+ - Evidence and assumptions
+ - Objections, risks, and contradictions

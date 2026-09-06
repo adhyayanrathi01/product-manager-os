@@ -5,11 +5,13 @@ description: "Define or revise a provider-neutral product analytics tracking pla
 
 # Create Tracking Plan
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require an approved or explicitly exploratory product goal, user flow, actor or entity model, measurement questions, and privacy constraints.
 - Verify existing event and naming sources when available. Mark the plan partial when identity, exclusions, ownership, or validation environment is unresolved.
 - Output a reviewable plan and acceptance checks. Do not create events or mutate instrumentation without explicit authorization.
+<!-- CORE:END -->
 
 ## Process
 
@@ -32,6 +34,12 @@ description: "Define or revise a provider-neutral product analytics tracking pla
 9. Create or modify events through an available tool only when the user explicitly requests execution.
 10. Add post-implementation validation criteria.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide a tracking table plus open questions, risks, ownership, and acceptance checks. Keep the plan independent of a specific analytics provider unless the user asks for provider-specific instructions.
+
+**Required fields:** Tracking table|Open questions|Risks|Ownership|Acceptance checks
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh create-tracking-plan <artifact>`.
+<!-- CORE:END -->

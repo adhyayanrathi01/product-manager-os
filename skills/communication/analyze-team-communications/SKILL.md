@@ -5,11 +5,13 @@ description: "Analyze team communication from chat, email, threads, announcement
 
 # Analyze Team Communications
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the decision, source ID, allowed scope, participant or channel boundary, absolute period, topic, and privacy or retention rules.
 - Verify read authorization and a bounded source read. If coverage is partial, analyze only retrieved content and identify missing channels, threads, or dates.
 - Block requests outside the permitted scope. Emit the shared evidence handoff for reusable findings.
+<!-- CORE:END -->
 
 ## Process
 
@@ -38,6 +40,7 @@ description: "Analyze team communication from chat, email, threads, announcement
 11. Present findings for PM review. Do not send, reply, react, or email without explicit approval.
 12. Save meaningful findings using skills/evidence/evidence-handoff.md, then update the relevant project and root work files as needed.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide:
@@ -53,3 +56,8 @@ Provide:
 - Optional draft communication, clearly marked as unsent
 
 Preserve attribution only when it materially supports follow-up or accountability.
+
+**Required fields:** Scope and source coverage|Confirmed decisions|Commitments|Blockers|Stakeholder concerns|Contradictions|Implications for the PM
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh analyze-team-communications <artifact>`.
+<!-- CORE:END -->
