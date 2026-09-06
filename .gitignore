@@ -11,7 +11,7 @@ node_modules/
 .agents/skills/
 .claude/skills/
 
-# Local evaluation artifacts
-evals/
-
-# Local evaluation suite and artifacts
+# Local evaluation run traces only. The suite itself ships: scenarios, the
+# evaluator protocol, check-output.sh, and test-guardrails.sh are referenced
+# from README.md and AGENTS.md and must exist in a fresh clone.
+evals/results/**/runs/

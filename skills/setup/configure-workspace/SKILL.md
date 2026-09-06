@@ -7,6 +7,15 @@ description: "Configure and verify a provider-neutral product-management workspa
 
 Make the requested product workflows usable without requiring every possible source. Configure incrementally and keep all skill logic provider-neutral.
 
+<!-- CORE:BEGIN -->
+## Contract
+
+- Collect only task-critical scope, sources, permissions, privacy, identity, and definitions. Leave unrelated fields as recorded gaps.
+- Never store a secret value. Record environment-variable names only.
+- A source is ready only when authorized, scoped, runtime-addressable, and observed through a bounded read.
+- Report every capability as ready, partial, or blocked with the exact missing condition.
+<!-- CORE:END -->
+
 ## Inputs
 
 Collect or infer only what is needed:
@@ -72,6 +81,7 @@ Do not block one skill because an unrelated source is unavailable.
 12. Update index.md source summaries with absolute authorization windows and the last agent-observed verification date; never summarize a moving relative window.
 13. If invoked just in time, return control to the original skill with the verified configuration and remaining limitations.
 
+<!-- CORE:BEGIN -->
 ## Safety
 
 - Never store passwords, tokens, session cookies, private keys, connection strings containing secrets, or raw credentials in Markdown, logs, projects, commands, or examples.
@@ -80,7 +90,9 @@ Do not block one skill because an unrelated source is unavailable.
 - Do not broaden scopes, install dependencies, mutate external systems, or perform write tests without explicit authorization.
 - A successful tool listing or login check does not prove resource-level access.
 - Do not mark a user-reported or untested source agent-observed or executable-ready. Record why a smoke test was skipped.
+<!-- CORE:END -->
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Return:
@@ -91,3 +103,8 @@ Return:
 - conventions added or changed in `context.md`;
 - smoke tests performed or skipped;
 - confirmation that no secrets were stored.
+
+**Required fields:** Configured workspace scope|Source-readiness table|Skill-readiness table|Conventions changed|Smoke tests|No secrets stored
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh configure-workspace <artifact>`.
+<!-- CORE:END -->

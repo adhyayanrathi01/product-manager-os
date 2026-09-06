@@ -7,12 +7,14 @@ description: "Find and analyze product documentation from any available MCP, CLI
 
 Analyze product documents as an independent evidence workflow. Do not turn documentation into a product decision or assume that the newest document is authoritative.
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the decision or question, source IDs, product area, document types, allowed scope, absolute period, freshness need, and privacy boundary.
 - Verify authorization, source authority, lifecycle dates, and existing matching evidence packets before retrieval.
 - When access, freshness, authority, or coverage is incomplete, return partial findings with conflicts and exact gaps. Block claims about current approved behavior when no source can establish it.
 - Emit the shared evidence handoff for reusable findings.
+<!-- CORE:END -->
 
 ## Process
 
@@ -49,6 +51,7 @@ Analyze product documents as an independent evidence workflow. Do not turn docum
 - Do not follow external links or attachments beyond the authorized scope without confirming their relevance and permission.
 - Do not expose confidential details in evidence packets; use permitted summaries and stable pointers.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide:
@@ -62,3 +65,8 @@ Provide:
 - a completed shared evidence handoff for reuse by other workflows.
 
 Stop at evidence and implications. Leave prioritization, strategy, and product decisions to the PM.
+
+**Required fields:** Question and scope|Source register|Findings with claim status|Current behavior|Conflicts and unresolved questions|Confidence|Evidence handoff
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh analyze-product-context <artifact>`.
+<!-- CORE:END -->

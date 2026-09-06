@@ -20,6 +20,9 @@ Usage: ./setup.sh [--check]
   (no option)  Validate the workspace, create .env when absent, and expose
                canonical skills through repo-local discovery paths.
   --check      Inspect validation and readiness without changing any files.
+  --core-hash  Print the immutable-core manifest to stdout and exit. Regenerate
+               core.sha256 with: ./setup.sh --core-hash > core.sha256
+               Review the resulting diff by hand; it is never an agent step.
 EOF
 }
 
@@ -133,6 +136,114 @@ frontmatter_value() {
       exit
     }
   ' "$file"
+}
+
+sha256_of_stdin() {
+  if command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 | awk '{print $1}'
+  elif command -v sha256sum >/dev/null 2>&1; then
+    sha256sum | awk '{print $1}'
+  else
+    return 1
+  fi
+}
+
+# Prints every line inside CORE:BEGIN/CORE:END fences, in file order.
+# Exit 3 = no fence found. Exit 4 = unclosed fence.
+core_regions() {
+  awk '
+    /^<!-- CORE:BEGIN -->$/ { if (inside) { bad = 1; exit } inside = 1; seen = 1; next }
+    /^<!-- CORE:END -->$/   { if (!inside) { bad = 1; exit } inside = 0; next }
+    inside { print }
+    END {
+      if (bad || inside) exit 4
+      if (!seen) exit 3
+    }
+  ' "$1"
+}
+
+core_hash_all() {
+  local skill_file rel digest
+  while IFS= read -r skill_file; do
+    rel="${skill_file#$ROOT_DIR/}"
+    if ! digest="$(core_regions "$skill_file" | sha256_of_stdin)"; then
+      return 1
+    fi
+    printf '%s  %s\n' "$digest" "$rel"
+  done < <(find "$ROOT_DIR/skills" -type f -name SKILL.md -print | LC_ALL=C sort)
+}
+
+verify_core_integrity() {
+  local manifest="$ROOT_DIR/core.sha256"
+  local skill_file rel digest expected status
+
+  if [ ! -f "$manifest" ]; then
+    validation_error "core.sha256 is required. Regenerate it with ./setup.sh --core-hash and review the diff."
+    return
+  fi
+
+  while IFS= read -r skill_file; do
+    rel="${skill_file#$ROOT_DIR/}"
+
+    core_regions "$skill_file" >/dev/null
+    status=$?
+    if [ "$status" -eq 3 ]; then
+      validation_error "$rel: no immutable core region. A skill must fence its contract and output with CORE:BEGIN/CORE:END."
+      continue
+    elif [ "$status" -eq 4 ]; then
+      validation_error "$rel: malformed core fence (unclosed or nested)."
+      continue
+    fi
+
+    expected="$(awk -v want="$rel" '$2 == want { print $1; found = 1; exit } END { if (!found) print "" }' "$manifest")"
+    if [ -z "$expected" ]; then
+      validation_error "$rel: skill is not listed in core.sha256."
+      continue
+    fi
+
+    digest="$(core_regions "$skill_file" | sha256_of_stdin)" || {
+      validation_error "$rel: no sha256 tool available (need shasum or sha256sum)."
+      continue
+    }
+
+    if [ "$digest" != "$expected" ]; then
+      validation_error "$rel: immutable core region changed. Expected $expected, found $digest. A core edit is a human specification change; it is never a self-improvement."
+    fi
+  done < <(find "$ROOT_DIR/skills" -type f -name SKILL.md -print | LC_ALL=C sort)
+
+  while IFS= read -r rel; do
+    [ -z "$rel" ] && continue
+    if [ ! -f "$ROOT_DIR/$rel" ]; then
+      validation_error "core.sha256 lists $rel, which does not exist. Removing a guarded skill is a human decision."
+    fi
+  done < <(awk 'NF { print $2 }' "$manifest")
+}
+
+report_core_drift() {
+  local baseline="${ORIGIN_REF:-core-origin}"
+  local skill_file rel budget added removed churn edits
+
+  command -v git >/dev/null 2>&1 || return 0
+  git -C "$ROOT_DIR" rev-parse --git-dir >/dev/null 2>&1 || return 0
+  git -C "$ROOT_DIR" rev-parse --verify --quiet "$baseline" >/dev/null 2>&1 || {
+    pending "No $baseline tag; drift is unmeasured. Tag the reviewed baseline with: git tag $baseline"
+    return 0
+  }
+
+  while IFS= read -r skill_file; do
+    rel="${skill_file#$ROOT_DIR/}"
+    # ponytail: line-count budget, not semantic distance. Cheap and catches bloat; raise DRIFT_BUDGET_PCT if it nags.
+    budget=$(( $(wc -l < "$skill_file") * ${DRIFT_BUDGET_PCT:-40} / 100 ))
+    [ "$budget" -lt 30 ] && budget=30
+    churn="$(git -C "$ROOT_DIR" diff --numstat "$baseline" -- "$rel" 2>/dev/null | awk '{print $1+$2}')"
+    [ -z "$churn" ] && churn=0
+    edits="$(git -C "$ROOT_DIR" rev-list --count "$baseline"..HEAD -- "$rel" 2>/dev/null || printf '0')"
+    if [ "$churn" -gt "$budget" ]; then
+      pending "drift: $rel has $churn changed line(s) since $baseline over $edits commit(s), budget $budget. Re-read it against the original specification."
+    elif [ "$churn" -gt 0 ]; then
+      info "drift: $rel $churn line(s) over $edits commit(s), within budget $budget."
+    fi
+  done < <(find "$ROOT_DIR/skills" -type f -name SKILL.md -print | LC_ALL=C sort)
 }
 
 validate_skill() {
@@ -358,6 +469,7 @@ fi
 if [ "$#" -eq 1 ]; then
   case "$1" in
     --check) CHECK_ONLY=1 ;;
+    --core-hash) cd "$ROOT_DIR"; core_hash_all; exit 0 ;;
     -h|--help) usage; exit 0 ;;
     *) usage >&2; exit 2 ;;
   esac
@@ -369,6 +481,9 @@ info "Validating workspace at $ROOT_DIR"
 required_files=(
   README.md
   AGENTS.md
+  CHARTER.md
+  CHANGELOG.md
+  core.sha256
   CLAUDE.md
   SETUP.md
   context.md
@@ -404,6 +519,8 @@ else
   if [ "$SKILL_COUNT" -eq 0 ]; then
     validation_error "No skills/**/SKILL.md packages were found."
   fi
+
+  verify_core_integrity
 fi
 
 if [ "$VALIDATION_ERRORS" -gt 0 ]; then
@@ -411,7 +528,8 @@ if [ "$VALIDATION_ERRORS" -gt 0 ]; then
   exit 1
 fi
 
-info "Validated $SKILL_COUNT skill package(s)."
+info "Validated $SKILL_COUNT skill package(s); immutable cores match core.sha256."
+report_core_drift
 
 if ! path_exists "$ROOT_DIR/.env"; then
   pending ".env will be created from .env.example without secret values."

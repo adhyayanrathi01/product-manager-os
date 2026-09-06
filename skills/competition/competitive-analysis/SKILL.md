@@ -5,12 +5,14 @@ description: "Research competitors, substitutes, adjacent products, and the stat
 
 # Competitive Analysis
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the PM decision, user job, market boundary, alternatives, comparison dimensions, geography when relevant, and observation date.
 - Verify that current primary sources are accessible. Mark unverifiable, stale, paywalled, or inferred claims explicitly.
 - If current evidence is unavailable, return a partial research plan rather than a capability or pricing conclusion.
 - Emit the shared evidence handoff when findings feed a project workflow.
+<!-- CORE:END -->
 
 ## Process
 
@@ -26,6 +28,12 @@ description: "Research competitors, substitutes, adjacent products, and the stat
 
 Avoid declaring a “winner” without decision-specific criteria.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide source coverage and dates, verified comparisons, inferred implications, gaps, trade-offs, questions for the PM, and a shared evidence packet when the work feeds a project.
+
+**Required fields:** Source coverage and dates|Verified comparisons|Inferred implications|Gaps|Trade-offs|Questions for the PM
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh competitive-analysis <artifact>`.
+<!-- CORE:END -->

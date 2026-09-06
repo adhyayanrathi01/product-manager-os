@@ -5,12 +5,14 @@ description: "Create a testable product prototype from a PM-approved direction, 
 
 # Build Prototype
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require a PM-approved direction or explicitly requested exploration, target persona, scenario, learning goal, constraints, and acceptance criteria.
 - Verify design-system access, destination, permitted fidelity, and whether any environment is production-connected.
 - If design context is incomplete, produce only a clearly labeled partial or low-fidelity exploration. Block production changes without explicit authorization.
 - Output the prototype pointer, covered states, assumptions, test scenario, and handoff limitations.
+<!-- CORE:END -->
 
 ## Process
 
@@ -27,6 +29,12 @@ description: "Create a testable product prototype from a PM-approved direction, 
 
 Do not treat a prototype as the PM’s final decision or as production-ready by default.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide the prototype pointer, covered personas and states, assumptions, accessibility and feasibility notes, test scenario, acceptance coverage, and explicit production-readiness limitations.
+
+**Required fields:** Prototype pointer|Covered personas and states|Assumptions|Accessibility and feasibility notes|Test scenario|Acceptance coverage|Production-readiness limitations
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh build-prototype <artifact>`.
+<!-- CORE:END -->

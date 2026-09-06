@@ -5,12 +5,14 @@ description: "Audit existing product analytics events for correctness, completen
 
 # Audit Events
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the decision or product flow, expected instrumentation, observed source scope, environment, and permission boundary.
 - Verify source readiness, event dictionary authority, identity rules, exclusions, and whether product-flow sampling is permitted.
 - Without observed data or flow access, provide a partial documentation audit and name what remains unverified; do not claim runtime correctness.
 - Emit a reusable evidence packet when the audit informs a broader investigation.
+<!-- CORE:END -->
 
 ## Process
 
@@ -24,6 +26,12 @@ description: "Audit existing product analytics events for correctness, completen
 8. Recommend the smallest corrections and validation plan.
 9. Do not modify instrumentation without explicit approval.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 List confirmed coverage, gaps, data-quality risks, affected analyses, recommended fixes, and verification steps.
+
+**Required fields:** Confirmed coverage|Gaps|Data-quality risks|Affected analyses|Recommended fixes|Verification steps
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh audit-events <artifact>`.
+<!-- CORE:END -->

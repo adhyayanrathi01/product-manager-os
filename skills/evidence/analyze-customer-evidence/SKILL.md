@@ -5,12 +5,14 @@ description: "Synthesize interviews, meeting notes, support tickets, surveys, sa
 
 # Analyze Customer Evidence
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the decision, source IDs, permitted scope, user segments, absolute period, deduplication unit, and privacy or retention boundary.
 - Verify source coverage and reuse matching evidence packets before retrieving raw material.
 - When sampling or permissions are partial, report bounded themes and missing voices; block prevalence claims unsupported by independent coverage.
 - Emit the shared evidence handoff for reusable findings.
+<!-- CORE:END -->
 
 ## Process
 
@@ -25,6 +27,12 @@ description: "Synthesize interviews, meeting notes, support tickets, surveys, sa
 9. Connect themes to quantitative or product evidence when available.
 10. Present implications and open questions, not an automatic product decision.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide source coverage, themes, evidence examples, affected segments, confidence, contradictions, risks of bias, and implications for the PM.
+
+**Required fields:** Source coverage|Themes|Evidence examples|Affected segments|Confidence|Contradictions|Risks of bias|Implications for the PM
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh analyze-customer-evidence <artifact>`.
+<!-- CORE:END -->

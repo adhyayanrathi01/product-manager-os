@@ -5,6 +5,7 @@ description: "Test a product flow against acceptance criteria across relevant pe
 
 # Test Product Flow
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the project acceptance criteria, environment, persona names, permitted actions, test scope, and evidence-retention boundary.
@@ -12,6 +13,7 @@ description: "Test a product flow against acceptance criteria across relevant pe
 - Verify browser or test readiness and confirm that the flow cannot affect real users or production data beyond the approved scope.
 - If a persona or environment is unavailable, test only ready coverage and report it as partial. Block unsafe or unauthorized execution.
 - Output reproducible cases, evidence pointers, coverage, failures, and untested areas.
+<!-- CORE:END -->
 
 ## Process
 
@@ -28,6 +30,12 @@ description: "Test a product flow against acceptance criteria across relevant pe
 
 Stop and report when a test could affect production data or real users.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Provide tested environment and personas, coverage, reproducible cases, expected and actual behavior, severity, evidence pointers, instrumentation observations, untested areas, and blockers.
+
+**Required fields:** Tested environment and personas|Coverage|Reproducible cases|Expected and actual behavior|Severity|Evidence pointers|Untested areas|Blockers
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh test-product-flow <artifact>`.
+<!-- CORE:END -->

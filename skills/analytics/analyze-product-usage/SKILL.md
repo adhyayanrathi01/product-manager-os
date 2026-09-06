@@ -5,6 +5,7 @@ description: "Analyze product behavior using whatever analytics, database, CLI, 
 
 # Analyze Product Usage
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require a decision or question, metric behavior, entity grain, segment, absolute period, comparison, and source scope.
@@ -12,6 +13,7 @@ description: "Analyze product behavior using whatever analytics, database, CLI, 
 - For longitudinal account- or workspace-grain metrics, require a confirmed stable cohort identity, cohort-assignment time, and task-critical merge/split treatment.
 - If definitions or access are incomplete, return a partial analysis plan and exact gaps. Do not publish a numerical finding when its denominator, grain, join, or maturity rule is unresolved.
 - Save the reproducible method and emit skills/evidence/evidence-handoff.md for reusable findings.
+<!-- CORE:END -->
 
 ## Process
 
@@ -26,6 +28,7 @@ description: "Analyze product behavior using whatever analytics, database, CLI, 
 9. Separate measured behavior from causal interpretation.
 10. Save reproducible filters, queries, or steps in the project.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Report:
@@ -41,3 +44,8 @@ Report:
 - Evidence packet ID and reproducible artifact pointer
 
 Do not claim causality from correlation alone.
+
+**Required fields:** Question and definitions|Source and scope|Cohort accounting|Findings|Data-quality limitations|Interpretations|Follow-up evidence|Implications for the PM|Evidence packet ID
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh analyze-product-usage <artifact>`.
+<!-- CORE:END -->

@@ -5,6 +5,7 @@ description: "Coordinate an evidence-backed product investigation from an ambigu
 
 # Run Product Workflow
 
+<!-- CORE:BEGIN -->
 ## Contract
 
 - Require the PM decision, desired outcome, target users, scope, success measure, time interpretation, and task-relevant readiness from context.md.
@@ -14,6 +15,7 @@ description: "Coordinate an evidence-backed product investigation from an ambigu
 - Give each worker one objective, explicit scope and permissions, only the necessary context, acceptance checks, and a concise output contract. Assign non-overlapping writes; workers do not update shared root or project state.
 - Require delegated evidence tracks to reuse matching packets and return conclusions, evidence pointers, uncertainty, changed files, and verification through the shared evidence handoff—not raw transcripts or long logs. The orchestrator alone integrates accepted results.
 - Output a decision brief and stop at the PM checkpoint before implementation or external mutation.
+<!-- CORE:END -->
 
 ## Process
 
@@ -43,6 +45,7 @@ description: "Coordinate an evidence-backed product investigation from an ambigu
 
 For a narrow request involving only tickets, meetings, or communications, invoke the relevant standalone skill without forcing the full multi-source workflow.
 
+<!-- CORE:BEGIN -->
 ## Output
 
 Produce a decision brief containing:
@@ -58,3 +61,8 @@ Produce a decision brief containing:
 - Recommended next evidence or experiment, clearly labeled as a recommendation
 
 Do not select the final product direction unless the PM explicitly asks for a recommendation, and even then preserve the decision checkpoint.
+
+**Required fields:** Decision to support|Executive summary|Evidence reviewed and gaps|Observed findings|Plausible causes|Options for the PM|Trade-offs and confidence|Questions the PM must decide|Recommended next evidence
+
+Every field above must appear as a labeled section in the produced output. Verify with `evals/check-output.sh run-product-workflow <artifact>`.
+<!-- CORE:END -->
