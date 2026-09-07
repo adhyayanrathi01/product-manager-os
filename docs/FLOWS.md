@@ -1,62 +1,93 @@
 # How it works
 
-Five things, each in plain language first and a diagram second. If you only read the plain-language parts you will still understand the system.
+Written for someone about to use this, not for someone reading the code. Each part is explained in plain language, with a diagram after it. Skip the diagrams and you will still understand it.
 
-The five: [getting started](#1-getting-started), [answering a question](#2-answering-a-product-question), [what a skill is](#3-what-a-skill-is-made-of), [how a skill improves itself](#4-how-a-skill-improves-itself), [what the check catches](#5-what-the-check-catches).
+1. [Getting set up](#1-getting-set-up)
+2. [What happens when you ask a question](#2-what-happens-when-you-ask-a-question)
+3. [What a skill is made of](#3-what-a-skill-is-made-of)
+4. [How a skill improves itself](#4-how-a-skill-improves-itself)
+5. [What the check catches](#5-what-the-check-catches)
 
 ---
 
-## 1. Getting started
+## 1. Getting set up
 
-You clone the repo, run `./setup.sh`, and then have a short conversation to tell it what tools you have and what you are allowed to read. It writes that down. After that, you can ask it product questions.
+Clone the repo and run `./setup.sh`. That takes a minute and only checks that the files are where they should be.
 
-The conversation matters because the system will not guess. For each source it asks four things: are you allowed to read it, what part of it, can it actually reach it, and does a small test read come back. A source that fails any of those is marked not ready, and skills say so instead of inventing an answer.
+Then it asks you questions. Which tools do you use. Which ones are you allowed to read. How does your company define an active user, a churned account, a week. It writes your answers into a file called `context.md`, and every skill reads that file before it does anything.
+
+The definitions part is the bit people skip and then regret. If you never say what "active user" means, every number you get back is measuring something you did not ask for.
+
+Then it tests each tool. Not "is it connected", but "can I actually read one row from it right now". A tool can be connected and still not readable, because the token expired, or your access covers a different workspace. So it does a small real read and records what came back.
+
+Every tool ends up as **ready**, **partial**, or **blocked**. When a tool is blocked, skills tell you that instead of quietly answering without it.
 
 ```mermaid
 flowchart LR
     A[Clone] --> B[Run setup.sh]
-    B --> C[Say what tools you have<br/>and what you can read]
-    C --> D[It writes that down]
-    D --> E[Ask a product question]
+    B --> C[Answer questions about<br/>your tools and definitions]
+    C --> D[It test-reads each tool]
+    D --> E[Ready, partial, or blocked]
 ```
 
 ---
 
-## 2. Answering a product question
+## 2. What happens when you ask a question
 
-Ask a narrow question and one skill handles it. Ask a broad one and the orchestrator runs several skills and pulls the answers together.
+Say you ask: *"Support keeps saying onboarding is confusing. Is that real, and what should we do?"*
 
-Either way the sequence is the same: work out what decision you are actually making, gather the smallest set of evidence that would settle it, keep facts separate from guesses, and hand you a brief with the options.
+Here is what actually happens.
 
-Then it stops. You make the call. It does not run the follow-on work unless you ask.
+**It asks what you are deciding.** Not the question you typed, the decision behind it. Are you deciding whether to rebuild onboarding, or whether to add a help doc, or where next quarter goes. Those need different evidence. It also asks how you would know it worked.
+
+**It picks the sources.** For this question that is support tickets, product analytics, and recent customer calls. It checks your `context.md` for which of those are ready. If calls are blocked, it says so up front rather than at the end.
+
+**It pulls only what it needs.** Not the whole ticket history. The smallest slice that could settle the question. If it already pulled something similar recently, it reuses that instead of hitting the tool again.
+
+**It sorts what it found into four piles.** What is a fact, what is an interpretation, what is a guess, and what is still unknown. This is the part that makes it different from asking a chatbot. Tickets saying "onboarding is confusing" is a fact. "Onboarding is broken" is an interpretation. Which one it is gets labelled.
+
+**It hands you a written brief.** Same shape every time, so you know where to look:
+
+| Section | What is in it |
+|---|---|
+| Decision to support | The decision you named at the start |
+| Executive summary | The short version |
+| Evidence reviewed and gaps | What it looked at, and what it could not |
+| Observed findings | The facts |
+| Plausible causes | The candidate explanations |
+| Options for the PM | What you could do |
+| Trade-offs and confidence | What each option costs, and how sure it is |
+| Questions the PM must decide | The calls it will not make for you |
+| Recommended next evidence | What to check if you are not convinced |
+
+**Then it stops.** It does not build the fix, file the ticket, or change anything. You decide. If you want it to prototype or test the option you picked, you ask for that separately.
 
 ```mermaid
 flowchart TD
-    A[Product question] --> B{One source, or several?}
-    B -->|One| C[Run that skill]
-    B -->|Several| D[Run the orchestrator]
-    C --> E[Gather evidence]
-    D --> E
-    E --> F[Separate facts from guesses]
-    F --> G[Decision brief with options]
-    G --> H{Your call}
-    H -->|Not enough yet| E
-    H -->|Decided| I[Stop, or start approved follow-on work]
+    A["You ask a question"] --> B["What decision is this for?"]
+    B --> C["Which sources are ready?"]
+    C --> D["Pull the smallest useful slice"]
+    D --> E["Sort into facts, interpretations,<br/>guesses, unknowns"]
+    E --> F["Written brief with options"]
+    F --> G{"You decide"}
+    G -->|"Not convinced"| D
+    G -->|"Decided"| H["Stop, or start the work you approved"]
 ```
 
-Three things happen inside "gather evidence" that are worth knowing:
+Two things worth knowing:
 
-- **It reuses recent work.** If a fresh evidence packet already answers part of the question, it uses that instead of pulling the source again.
-- **It runs sub-agents only when they help.** Parallel work happens only when the pieces do not overlap.
-- **It reports gaps instead of filling them.** If a source is not ready, you get a partial answer that names the exact gap.
+- **Narrow questions skip the long path.** "What are the top ticket themes this month" runs one skill and comes straight back. The full sequence above is for questions that need several sources cross-checked.
+- **A missing tool gives you a partial answer, not a fake one.** If calls are blocked, you get the tickets-and-analytics answer with a line saying calls were not checked and what that leaves open.
 
 ---
 
 ## 3. What a skill is made of
 
-Every skill file has two halves.
+A skill is one markdown file. Open one and you will see three sections.
 
-The **locked half** says what the skill is for and what it must produce. Only a human changes that. The **open half** is the steps for doing the work, and the agent may improve those.
+**Contract** says what the skill is for. **Output** says what it must produce, listed field by field. Those two are locked, and only a person changes them.
+
+**Process** is the steps for doing the work. That one is open, and the agent may improve it.
 
 That split is the whole idea. A skill can get better at its job without changing what its job is.
 
@@ -89,7 +120,7 @@ An edit has to clear four things:
 
 1. **Is it allowed to touch this?** The charter, the locked half, the fingerprint file, and the test suite are all off limits. Asking nicely does not change that.
 2. **Is it a small edit, and is there evidence?** Whole-file rewrites are refused. So are edits with no cited failure behind them. Someone saying "this would be better" is not evidence.
-3. **Do the three critics pass?** Is the file still valid, does the edit weaken any rule about permissions or privacy or evidence, and does the skill still do what it originally promised.
+3. **Do the three checks pass?** Is the file still valid markdown with everything in place. Does the edit weaken any rule about what it may read or share. Does the skill still do what it originally promised.
 4. **Is it within budget?** Small edits add up. Past the cap, it stops and asks a human to re-read the skill against the original, even if every other check is green.
 
 Only then does it write, and only in the mode you chose: `off`, `suggest`, or `safe-auto`. `suggest` is the default, so nothing is edited until you turn that on.
@@ -100,9 +131,9 @@ flowchart TD
     B -->|No| X[Refuse and say which rule]
     B -->|Yes| C{Small edit with real evidence?}
     C -->|No| X
-    C -->|Yes| D{Three critics pass?<br/>valid, harmless, still on-contract}
+    C -->|Yes| D{Three checks pass?<br/>valid, safe, keeps its promise}
     D -->|No| Y[Show the proposed diff.<br/>Nothing was written]
-    D -->|Yes| E{Within the edit budget?}
+    D -->|Yes| E{Small enough to stay<br/>within budget?}
     E -->|No| Z[Stop. Ask a human to re-read<br/>against the original]
     E -->|Yes| F{Your mode}
     F -->|"off or suggest"| Y
@@ -121,14 +152,16 @@ Two details that are easy to miss:
 
 ## 5. What the check catches
 
-`./setup.sh --check` is the safety net. It calls no model and touches no network, so it is fast and gives the same answer every time. Run it whenever.
+`./setup.sh --check` is the safety net. Run it after pulling an update, after editing a skill by hand, or any time you want to know the repo is still intact.
+
+It calls no model and touches no network. It is a shell script reading files, so it is fast and gives the same answer every time.
 
 It fails on four things:
 
 | It fails when | Because |
 |---|---|
-| A skill has no locked half, or the markers are broken | Deleting the guardrail is not a way around it |
-| The locked half changed | That is a specification change, and a human makes those |
+| A skill has no locked sections, or the markers are broken | Deleting the guardrail is not a way around it |
+| A locked section changed | Changing what a skill promises is a person's call, never a self-edit |
 | A skill is missing from the fingerprint file, or listed but gone | The list and the skills have to agree |
 | A skill has drifted too far from the original | Catches slow drift that each individual edit stayed under |
 

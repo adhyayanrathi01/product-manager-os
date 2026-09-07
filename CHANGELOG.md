@@ -10,7 +10,8 @@ Documentation only. No behavior changed.
 
 ### Changed
 
-- `docs/FLOWS.md` rewritten in plain language. Every section now explains itself in prose first and shows a diagram second, so the diagrams no longer have to carry the explanation. The three dense charts were cut from 25 to 30 nodes each down to under 15, and the detail they used to hold moved into short lists and a table.
+- `docs/FLOWS.md` rewritten for someone about to use the workspace rather than someone reading its code. Setup and the end-to-end journey are now told as a concrete walkthrough with a real question, what gets asked back, and the shape of the brief you receive. Internal terms were replaced with plain ones: orchestrator, evidence packet, admissibility, and specification change are gone from the reader-facing text.
+- Diagrams in `docs/FLOWS.md` now illustrate rather than explain. The three dense charts dropped from 25 to 30 nodes each down to under 15, and the detail they carried moved into prose, short lists, and a table of the brief's sections.
 - README pointers to the diagrams now use plain wording instead of internal terms.
 
 ## 0.4.0 (2026-08-30)
