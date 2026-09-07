@@ -4,6 +4,15 @@ Notable changes to this workspace. Newest first.
 
 This file exists so an upgrade is visible. `VERSION` records the current semantic version.
 
+## 0.4.1 (2026-09-07)
+
+Documentation only. No behavior changed.
+
+### Changed
+
+- `docs/FLOWS.md` rewritten in plain language. Every section now explains itself in prose first and shows a diagram second, so the diagrams no longer have to carry the explanation. The three dense charts were cut from 25 to 30 nodes each down to under 15, and the detail they used to hold moved into short lists and a table.
+- README pointers to the diagrams now use plain wording instead of internal terms.
+
 ## 0.4.0 (2026-08-30)
 
 Guarded self-improvement. Skills may now improve their own process, and cannot quietly change what they are for.

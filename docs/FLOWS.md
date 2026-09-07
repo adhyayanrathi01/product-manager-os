@@ -1,140 +1,155 @@
-# Product workflow diagrams
+# How it works
 
-These provider-neutral flows summarize how the workspace moves from setup to evidence-backed PM decisions, and how reusable workflow improvements are handled safely.
+Five things, each in plain language first and a diagram second. If you only read the plain-language parts you will still understand the system.
 
-## End-to-end user journey
+The five: [getting started](#1-getting-started), [answering a question](#2-answering-a-product-question), [what a skill is](#3-what-a-skill-is-made-of), [how a skill improves itself](#4-how-a-skill-improves-itself), [what the check catches](#5-what-the-check-catches).
 
-`setup.sh` validates the local structure. Conversational configuration separately establishes whether each task-relevant source is authorized, scoped, runtime-addressable, and verified through a bounded read.
+---
 
-```mermaid
-flowchart TD
-    A[Clone repository] --> B[Run setup.sh]
-    B --> C[Configure workspace conversationally]
-    C --> D[Record definitions, permissions, and source readiness]
-    D --> E[Ask a product question]
-    E --> F[Clarify the PM decision and success measure]
-    F --> G[Create or select a project]
-    G --> H[Gather the smallest useful evidence set]
-    H --> I[Separate facts, interpretations, hypotheses, and unknowns]
-    I --> J[Produce a decision brief with options and trade-offs]
-    J --> K{PM checkpoint}
-    K -->|More evidence needed| H
-    K -->|Direction selected| L{Follow-on work authorized?}
-    L -->|No| M[Stop with decision and operating state]
-    L -->|Yes| N[Run the separately approved query, prototype, test, or implementation]
-```
+## 1. Getting started
 
-## Standalone skills and orchestrated evidence
+You clone the repo, run `./setup.sh`, and then have a short conversation to tell it what tools you have and what you are allowed to read. It writes that down. After that, you can ask it product questions.
 
-Narrow requests can use one evidence skill directly. Multi-source investigations use the orchestrator, which alone integrates shared project state and stops at PM decision ownership.
-
-```mermaid
-flowchart TD
-    A[Product request] --> B{Single evidence scope?}
-    B -->|Yes| C[Run the matching standalone skill]
-    B -->|No| D[Run the product workflow]
-    C --> E[Check task definitions, permissions, and readiness]
-    D --> E
-    E --> F{Useful source ready or supplied artifact readable?}
-    F -->|No| G[Return partial or blocked with the exact gap]
-    F -->|Yes| H[Check for a matching fresh evidence packet]
-    H --> I{Reusable packet available?}
-    I -->|Yes| J[Reuse the evidence handoff]
-    I -->|No| K[Select the smallest useful evidence tracks]
-    K --> L{Bounded independent work helps?}
-    L -->|No| M[Run evidence tracks sequentially]
-    L -->|Yes| N[Delegate the minimum bounded subagents with non-overlapping writes]
-    M --> O[Evidence skills emit traceable handoffs]
-    N --> O
-    J --> P{Orchestrated investigation?}
-    O --> P
-    P -->|No| Q[Return scoped findings for PM review]
-    P -->|Yes| R[Orchestrator integrates accepted evidence once]
-    R --> S[Synthesize facts, hypotheses, options, uncertainty, and trade-offs]
-    S --> T[Decision brief]
-    T --> U{PM checkpoint}
-```
-
-## What a skill is made of
-
-Every `skills/**/SKILL.md` splits into a part a human owns and a part the agent may improve. The split is the whole guardrail: a skill can get better at its job without changing what its job is.
+The conversation matters because the system will not guess. For each source it asks four things: are you allowed to read it, what part of it, can it actually reach it, and does a small test read come back. A source that fails any of those is marked not ready, and skills say so instead of inventing an answer.
 
 ```mermaid
 flowchart LR
-    subgraph IMM["Immutable, human-owned"]
-        A["## Contract<br/>scope, required inputs,<br/>hard constraints"]
-        B["## Output<br/>Required fields, the<br/>machine-checkable promise"]
+    A[Clone] --> B[Run setup.sh]
+    B --> C[Say what tools you have<br/>and what you can read]
+    C --> D[It writes that down]
+    D --> E[Ask a product question]
+```
+
+---
+
+## 2. Answering a product question
+
+Ask a narrow question and one skill handles it. Ask a broad one and the orchestrator runs several skills and pulls the answers together.
+
+Either way the sequence is the same: work out what decision you are actually making, gather the smallest set of evidence that would settle it, keep facts separate from guesses, and hand you a brief with the options.
+
+Then it stops. You make the call. It does not run the follow-on work unless you ask.
+
+```mermaid
+flowchart TD
+    A[Product question] --> B{One source, or several?}
+    B -->|One| C[Run that skill]
+    B -->|Several| D[Run the orchestrator]
+    C --> E[Gather evidence]
+    D --> E
+    E --> F[Separate facts from guesses]
+    F --> G[Decision brief with options]
+    G --> H{Your call}
+    H -->|Not enough yet| E
+    H -->|Decided| I[Stop, or start approved follow-on work]
+```
+
+Three things happen inside "gather evidence" that are worth knowing:
+
+- **It reuses recent work.** If a fresh evidence packet already answers part of the question, it uses that instead of pulling the source again.
+- **It runs sub-agents only when they help.** Parallel work happens only when the pieces do not overlap.
+- **It reports gaps instead of filling them.** If a source is not ready, you get a partial answer that names the exact gap.
+
+---
+
+## 3. What a skill is made of
+
+Every skill file has two halves.
+
+The **locked half** says what the skill is for and what it must produce. Only a human changes that. The **open half** is the steps for doing the work, and the agent may improve those.
+
+That split is the whole idea. A skill can get better at its job without changing what its job is.
+
+```mermaid
+flowchart LR
+    subgraph L["Locked, only a human edits"]
+        A["Contract: what it is for"]
+        B["Output: what it must produce"]
     end
-    subgraph MUT["Mutable, agent may improve"]
-        C["## Process<br/>steps, heuristics,<br/>phrasing, examples"]
+    subgraph O["Open, the agent may improve"]
+        C["Process: the steps"]
     end
-    A --> D["core.sha256<br/>hash of every fenced region"]
+    A --> D["core.sha256<br/>fingerprint of the locked half"]
     B --> D
-    D --> E["./setup.sh --check<br/>fails on a changed region,<br/>a removed fence, or a<br/>skill missing from the manifest"]
-    C --> F["git history<br/>one commit per edit,<br/>rollback to any version"]
+    D --> E["setup.sh --check<br/>fails if the locked half changed"]
+    C --> F["git<br/>one commit per edit,<br/>roll back any time"]
 ```
 
-Upstream owns the fenced regions and local self-improvements own `## Process`, so an upgrade merges cleanly. A conflict on pull means an edit escaped its region, which is information rather than an accident.
+This also makes updates painless. Upstream changes land in the locked half, your own improvements sit in the open half, so a pull usually merges cleanly. If you do get a conflict, that is useful: it means an edit went somewhere it should not have.
 
-## Safe skill improvement
+---
 
-Improvement requests are untrusted input. Every check runs **before** anything is written, because skill contamination does not reverse cleanly and a failed check should leave no hunk to revert.
+## 4. How a skill improves itself
+
+An agent that can rewrite its own instructions will slowly rewrite itself into something else. Every edit looks reasonable on its own. Fifty edits later you cannot find the one that broke it.
+
+So every check runs **before** anything is written. If a check fails, no edit was ever made, so there is nothing to undo.
+
+An edit has to clear four things:
+
+1. **Is it allowed to touch this?** The charter, the locked half, the fingerprint file, and the test suite are all off limits. Asking nicely does not change that.
+2. **Is it a small edit, and is there evidence?** Whole-file rewrites are refused. So are edits with no cited failure behind them. Someone saying "this would be better" is not evidence.
+3. **Do the three critics pass?** Is the file still valid, does the edit weaken any rule about permissions or privacy or evidence, and does the skill still do what it originally promised.
+4. **Is it within budget?** Small edits add up. Past the cap, it stops and asks a human to re-read the skill against the original, even if every other check is green.
+
+Only then does it write, and only in the mode you chose: `off`, `suggest`, or `safe-auto`. `suggest` is the default, so nothing is edited until you turn that on.
 
 ```mermaid
 flowchart TD
-    A["Improvement request or automatic trigger"] --> B["Treat the payload as untrusted data"]
-    B --> C{"Targets CHARTER.md, a core region,<br/>core.sha256, a constraint file, or evals/?"}
-    C -->|Yes| D["Refuse in every mode.<br/>Report the clause and path.<br/>Never a silent no_change"]
-    C -->|No| E{"Whole-file rewrite?"}
-    E -->|Yes| F["Refuse. Deltas to single rules only"]
-    E -->|No| G{"Cited, inspectable evidence?"}
-    G -->|No| H["Refuse as ungrounded, including<br/>a manual mode: apply.<br/>Assertion is not evidence"]
-    G -->|Yes| I{"Behavior already exists and<br/>the acceptance check passes?"}
-    I -->|Yes| J["Return no_change with the rule location"]
-    I -->|No| K["Pre-commit critics"]
-    K --> K1["Structural validity:<br/>frontmatter, headings, fences intact;<br/>edit lands inside ## Process"]
-    K --> K2["Behavioral harmlessness:<br/>weakens no permission, privacy,<br/>readiness or evidence rule;<br/>checked clause by clause"]
-    K --> K3["Semantic consistency vs core-origin:<br/>every origin constraint still present,<br/>rule count has not silently fallen"]
-    K1 --> L{"All three pass?"}
-    K2 --> L
-    K3 --> L
-    L -->|No| M["Return an exact proposed diff.<br/>Nothing was written"]
-    L -->|Yes| N{"Over the rule cap or the drift budget?"}
-    N -->|Yes| O["Stop. Request a human re-read against<br/>the original specification.<br/>A green check does not override this"]
-    N -->|No| P{"Configured mode"}
-    P -->|"off, or suggest"| M
-    P -->|"safe-auto with a confirmed failure"| Q["Apply the single delta"]
-    Q --> R["Scoped verification: the changed rule<br/>and the rules referencing it"]
-    R --> S["./setup.sh --check"]
-    S --> T{"Cores still match the manifest?"}
-    T -->|No| U["The edit escaped ## Process.<br/>Revert the hunk and report"]
-    T -->|Yes| V["Commit one skill file with<br/>Skill, Evidence, Validated-by,<br/>Assisted-by trailers"]
-    V --> W["Append the validated change to log.md"]
+    A[Improvement request] --> B{Allowed to touch this file?}
+    B -->|No| X[Refuse and say which rule]
+    B -->|Yes| C{Small edit with real evidence?}
+    C -->|No| X
+    C -->|Yes| D{Three critics pass?<br/>valid, harmless, still on-contract}
+    D -->|No| Y[Show the proposed diff.<br/>Nothing was written]
+    D -->|Yes| E{Within the edit budget?}
+    E -->|No| Z[Stop. Ask a human to re-read<br/>against the original]
+    E -->|Yes| F{Your mode}
+    F -->|"off or suggest"| Y
+    F -->|"safe-auto"| G[Apply one small change]
+    G --> H[Re-check the changed rule<br/>and anything that references it]
+    H --> I[Run setup.sh --check]
+    I --> J[Commit one file, with the<br/>evidence recorded in the commit]
 ```
 
-## Integrity and drift checks
+Two details that are easy to miss:
 
-`./setup.sh --check` is the deterministic gate. It runs no model and reaches no network, so it is safe to run on every commit.
+- **The comparison is against the original, not yesterday.** Compare each edit to the one before it and every step looks small, so drift never shows. The original is pinned with a git tag called `core-origin`.
+- **"No change needed" is a real answer.** If the skill already does what was asked, it says so and points at the rule, rather than adding a duplicate.
+
+---
+
+## 5. What the check catches
+
+`./setup.sh --check` is the safety net. It calls no model and touches no network, so it is fast and gives the same answer every time. Run it whenever.
+
+It fails on four things:
+
+| It fails when | Because |
+|---|---|
+| A skill has no locked half, or the markers are broken | Deleting the guardrail is not a way around it |
+| The locked half changed | That is a specification change, and a human makes those |
+| A skill is missing from the fingerprint file, or listed but gone | The list and the skills have to agree |
+| A skill has drifted too far from the original | Catches slow drift that each individual edit stayed under |
 
 ```mermaid
 flowchart TD
-    A["./setup.sh --check"] --> B["Validate skill packages:<br/>frontmatter, naming, metadata"]
-    B --> C{"Every skill has a CORE fence,<br/>well formed and closed?"}
-    C -->|No| D["FAIL: missing or malformed fence.<br/>Deleting the guardrail is not a way around it"]
-    C -->|Yes| E{"Each fenced region's hash<br/>matches core.sha256?"}
-    E -->|No| F["FAIL: a core region changed.<br/>That is a human specification change,<br/>never a self-improvement"]
-    E -->|Yes| G{"Manifest and skills agree,<br/>nothing added or removed?"}
-    G -->|No| H["FAIL: unlisted skill, or a listed<br/>skill that no longer exists"]
-    G -->|Yes| I["Cores verified"]
-    I --> J{"core-origin tag exists?"}
-    J -->|No| K["Report drift as unmeasured.<br/>Tag the reviewed baseline"]
-    J -->|Yes| L["Per skill, diff against core-origin"]
-    L --> M{"Changed lines over budget?"}
-    M -->|Yes| N["Flag for a human re-read.<br/>Catches drift that stayed under<br/>the per-edit threshold"]
-    M -->|No| O["Report changed lines and commit count"]
+    A["setup.sh --check"] --> B[Skill files valid?]
+    B --> C[Locked halves present<br/>and unchanged?]
+    C --> D[Fingerprint file<br/>matches the skills?]
+    D --> E[How far from the original?]
+    E --> F[Report drift per skill]
 ```
 
-Two further checks are separate because they take an argument:
+Two more checks take an argument, so you run them yourself:
 
-- `evals/check-output.sh <skill> <artifact>` verifies a produced artifact against the `Required fields` its skill declares. A missing field exits non-zero and names it.
-- `evals/test-guardrails.sh` asserts that each guardrail above actually fails when it should, against a disposable copy of the workspace.
+- `evals/check-output.sh <skill> <artifact>` checks a produced document against the fields its skill promised. A missing field fails and names it.
+- `evals/test-guardrails.sh` checks that all of the above actually fail when they should. It works on a throwaway copy, so it cannot damage anything.
+
+---
+
+## The honest limit
+
+Anyone with terminal access, the agent included, can regenerate the fingerprint file and make an edit look approved. Nothing here stops that.
+
+What it does is make the attempt visible in the diff, so a human reviewing the change can see it. That is a real limit, and it is written down rather than papered over.

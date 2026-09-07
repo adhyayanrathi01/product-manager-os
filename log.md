@@ -13,3 +13,4 @@
 | 2026-09-06 | v0.4.0 | Corrected core-region count from 33 to 34 in the design doc and results | 14 skills carry 2 regions, 2 skills carry 3 |
 | 2026-09-06 | v0.4.0 | End-to-end verification found documented git trailers do not parse when written as separate -m flags | Provenance looked recorded but was not queryable; CONTRIBUTING.md and improve-skills now require one contiguous block and give a verify command |
 | 2026-09-06 | v0.4.0 | Rewrote docs/FLOWS.md for v0.4.0 and expanded the README guarded self-improvement section | Old improvement diagram described apply-then-rollback, which v0.4.0 replaced with pre-commit gating; added skill-anatomy and integrity-check diagrams; all 5 mermaid charts parse |
+| 2026-09-07 | v0.4.1 | Rewrote docs/FLOWS.md in plain language and simplified every diagram | The diagrams were carrying the explanation and were unreadable; prose now explains, diagrams show shape; all 5 charts re-validated, setup.sh --check passes |

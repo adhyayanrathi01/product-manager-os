@@ -2,7 +2,7 @@
 
 An evidence-first workspace that automates product research, analysis, synthesis, prototyping, and testing without replacing product judgment.
 
-> **See [the workflow diagrams](docs/FLOWS.md)** for the end-to-end user journey, evidence orchestration, and safe skill-improvement paths.
+> **See [how it works](docs/FLOWS.md)** for the whole system in plain language: getting started, how a question gets answered, what a skill is made of, how a skill improves itself, and what the check catches.
 
 ## Core principle
 
@@ -102,7 +102,7 @@ A skill may improve how it works. It may not change what it is for.
 
 That distinction is the whole design. Left unguarded, an agent editing its own instructions drifts: each edit looks reasonable on its own, and after enough of them the skill no longer does the job it was written for. Every check below exists to make that drift visible while it is still small.
 
-See [the workflow diagrams](docs/FLOWS.md) for the anatomy of a skill, the admissibility flow, and what `./setup.sh --check` verifies.
+See [how it works](docs/FLOWS.md) for what a skill is made of, what an edit has to clear before it lands, and what `./setup.sh --check` catches.
 
 ### How a skill is split
 
