@@ -48,8 +48,8 @@ Analyze product documents as an independent evidence workflow. Do not turn docum
 Use public mode when the source is the product's public web presence, including a workspace trial pre-fill.
 
 1. Follow `skills/evidence/public-research-method.md`.
-2. Use source ID `public-web`, allowed scope "public pages", and the retrieval date as the period.
-3. By default, read what a product manager needs:
+2. Use source ID `public-web`, with allowed scope "public pages as of <retrieval date>". Still resolve the question's own period under step 1.
+3. When the question does not narrow the reading, read what a product manager needs:
    - product and plans
    - target users and roles named on the site
    - core jobs and use cases
@@ -61,15 +61,15 @@ Use public mode when the source is the product's public web presence, including 
    - the company's own terms for its features
 
    Read company history, funding, or team pages only when asked.
-4. Treat a public pricing, docs, or help page as **Approved/current** only for what it publishes, as of its retrieval date. Mark it `public` in the source register's authority column. It does not show internal approval. A changelog shows intent and release, not adoption.
-5. Internal documentation outranks public pages when it exists. Report a public finding that conflicts with a confirmed `context.md` value as a conflict. Never overwrite the confirmed value.
+4. Classify what a first-party public page publishes as **Approved/current** only as published behavior on its retrieval date, and mark it `public` in the source register's authority column. It does not show internal approval. A changelog shows intent and release, not adoption. A marketing claim is a fact only about what the company says. Classify third-party pages by the source classes in `public-research-method.md`.
+5. Internal documentation outranks public pages on what is approved internally, not on what is published. Report every conflict between them under step 8, and never overwrite a confirmed `context.md` value.
 6. For a workspace pre-fill, map findings to these `context.md` sections:
    - Company and product
    - Users and personas
    - Product documentation
    - Product terminology
 
-   Tag each value `(public: <url>, <YYYY-MM-DD>, read|inferred, unconfirmed)`.
+   Tag each value `(public: <url>, <YYYY-MM-DD>, read|inferred, unconfirmed)`. `read` means the page states it. `inferred` means you concluded it from what the page states. The date is the retrieval date. Do not pre-fill hypotheses.
 
 ## Source safety
 

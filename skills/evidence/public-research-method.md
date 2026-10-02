@@ -66,7 +66,15 @@ Count corroboration by independent origin, not by URL. An aggregator and its ori
 ## Before output
 
 1. Reread the original for every claim the answer depends on.
-2. Confirm each excerpt appears word for word in the page text. Drop or relabel any excerpt that does not.
-3. When a project is active, save the text behind each cited claim under `research/<YYYY-MM-DD>/` in that project. Never overwrite an earlier date. Without a project, keep the excerpts in the claim ledger.
+2. Confirm each excerpt appears word for word in the page text. Drop any excerpt that does not match, or keep it as a paraphrase without quotation marks.
+3. When a project is active, save the full text of each cited page under `research/<YYYY-MM-DD>/` in that project. Never overwrite an earlier date. Without a project, keep the excerpts in the claim ledger.
 4. Record failed searches and dropped sources.
-5. End with one stop verdict: continue, shift to verify, sufficient, saturated, budget, or escalate. Stop desk research when interviews or an experiment would answer the question better.
+5. Record one stop verdict in the output's confidence section:
+   - continue: more searching would change the answer
+   - shift to verify: stop searching and check the claims already found
+   - sufficient: the decision questions are answered
+   - saturated: new searches return nothing new
+   - budget: the tool-call cap was reached
+   - escalate: the answer needs a person or a private source
+
+   Stop desk research when interviews or an experiment would answer the question better.
