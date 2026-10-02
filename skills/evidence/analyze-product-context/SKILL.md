@@ -48,7 +48,7 @@ Analyze product documents as an independent evidence workflow. Do not turn docum
 Use public mode when the source is the product's public web presence, including a workspace trial pre-fill.
 
 1. Follow `skills/evidence/public-research-method.md`.
-2. Use source ID `public-web`, with allowed scope "public pages as of <retrieval date>". Still resolve the question's own period under step 1.
+2. Use source ID `public-web`, with allowed scope "public pages as of <retrieval date>". Still resolve the question's own period under Process step 1.
 3. When the question does not narrow the reading, read what a product manager needs:
    - product and plans
    - target users and roles named on the site
@@ -61,8 +61,8 @@ Use public mode when the source is the product's public web presence, including 
    - the company's own terms for its features
 
    Read company history, funding, or team pages only when asked.
-4. Classify what a first-party public page publishes as **Approved/current** only as published behavior on its retrieval date, and mark it `public` in the source register's authority column. It does not show internal approval. A changelog shows intent and release, not adoption. A marketing claim is a fact only about what the company says. Classify third-party pages by the source classes in `public-research-method.md`.
-5. Internal documentation outranks public pages on what is approved internally, not on what is published. Report every conflict between them under step 8, and never overwrite a confirmed `context.md` value.
+4. Classify what a first-party public page publishes as **Approved/current** only as published behavior on its retrieval date, and mark it `public` in the source register's authority column. It does not show internal approval. A changelog shows intent and release, not adoption. A marketing claim is a fact only about what the company says. Grade third-party pages by the source classes in `public-research-method.md`. Every claim still gets its status under Process step 7.
+5. Internal documentation outranks public pages on what is approved internally, not on what is published. Report every conflict between them, or with a confirmed `context.md` value, under Process step 8. Never overwrite a confirmed value.
 6. For a workspace pre-fill, map findings to these `context.md` sections:
    - Company and product
    - Users and personas
