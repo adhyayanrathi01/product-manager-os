@@ -1,6 +1,13 @@
 # First-use setup
 
-Run `./setup.sh` before onboarding. It validates canonical skills and creates repo-local discovery links without installing dependencies or storing connector secrets. `./setup.sh --check` is non-mutating.
+`./setup.sh` is optional. It makes skills callable by name, validates canonical skills, and creates repo-local discovery links without installing dependencies or storing connector secrets. `./setup.sh --check` is non-mutating.
+
+## Two ways to start
+
+- **Trial.** The user names their company. `configure-workspace` trial mode fills `context.md` from public pages, tagged `unconfirmed`, and the user corrects it. Skills that need private sources stay blocked until they are set up just in time.
+- **Full setup.** Follow the sequence below.
+
+If the first prompt does not pick one, offer both. If it does, start that path.
 
 Use configure-workspace and ask one question at a time; do not require every field before providing value.
 
@@ -30,5 +37,7 @@ For an active task, ask only for task-critical scope, sources, permissions, priv
 ## Completion criteria
 
 Setup is sufficient when the decision, product and users, source scopes, permissions, privacy limits, definitions and joins, time boundaries, and contamination rules are known. At least one task-relevant source must be addressable and agent-observed through a bounded read, including a readable supplied artifact; otherwise report blocked. Longitudinal account/workspace work also requires stable cohort identity and task-critical merge/split treatment.
+
+A trial is sufficient for public-evidence questions once the user has approved the pre-filled profile and `public-web` has an agent-observed read. It is not sufficient for analytics, tickets, meetings, or communications.
 
 Setup is resumable. Record overall and per-skill readiness in context.md so later tasks ask only for newly relevant gaps.

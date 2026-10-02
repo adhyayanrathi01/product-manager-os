@@ -5,6 +5,8 @@
 
 Status values: `ready`, `partial`, `blocked`, or `not-needed`. A source is executable-ready only when it is authorized and scoped, the current runtime can address its non-secret invocation handle or supplied artifact, and an agent has observed a bounded read. A user-reported prior smoke test alone is not executable readiness.
 
+Setup status values: `Incomplete`, `Trial`, or `Complete`. Trial values carry a tag: `(public: <url>, <YYYY-MM-DD>, read|inferred, unconfirmed|confirmed)`.
+
 ## Company and product
 
 - Company:

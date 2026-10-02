@@ -47,6 +47,7 @@ Do not relocate or rewrite canonical skills. Any runtime cache or index must be 
 - External-source availability, rate limits, pagination, search quality, and data freshness vary by connector.
 - The workspace does not manage secrets; use local environment variables or an approved secret manager.
 - Workflows can operate with partial evidence, but they must label missing sources and confidence limits.
+- The trial and public research need a web-reading capability. Without one, those paths report blocked, and full setup still works.
 
 ## Versioning and upgrades
 

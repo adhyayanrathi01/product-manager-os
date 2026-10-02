@@ -27,7 +27,7 @@ Collect or infer only what is needed:
 - company, product, users, and documentation pointers;
 - metric, entity, identity, calendar, privacy, and QA-role conventions.
 
-Use first-run mode for broad onboarding. Use just-in-time mode when another skill is blocked or uncertain; inspect only that skill's missing prerequisites and resume it after configuration.
+Use trial mode when the user wants to try the workspace before setup. Use first-run mode for broad onboarding. Use just-in-time mode when another skill is blocked or uncertain; inspect only that skill's missing prerequisites and resume it after configuration.
 
 ## Readiness states
 
@@ -76,10 +76,39 @@ Do not block one skill because an unrelated source is unavailable.
 7. For each task-critical longitudinal account or workspace metric, confirm what identity remains stable from cohort entry through the outcome window and how pre/post-merge and split activity is attributed. Keep the dependent skill partial or blocked while this is unresolved. If the ambiguity is bounded and not decision-critical, propose excluding ambiguous entities and report a sensitivity analysis alongside the primary result.
 8. Ask the user only for material unresolved choices. Do not invent business definitions, permissions, identity mappings, or authority.
 9. During QA-persona setup, ask permission before changing the local `.env`. Confirm it is git-ignored and untracked without opening it. If permitted, inspect declaration names only and append only missing `NAME=` declarations; never inspect, overwrite, or print values. If permission is absent, the file is tracked, or safe name-only inspection is unavailable, print the exact variable names the user must declare and keep QA partial until availability is agent-observed.
-10. Update `context.md` with confirmed values, source readiness, verification timestamps, and explicit unknowns. Preserve its existing structure where practical; add concise sections only when required.
+10. Update `context.md` with confirmed values, or trial values tagged `unconfirmed`, plus source readiness, verification timestamps, and explicit unknowns. Preserve its existing structure where practical; add concise sections only when required.
 11. Reassess every discovered skill as ready, partial, or blocked. For partial and blocked skills, name the exact missing condition and the smallest next action.
 12. Update index.md source summaries with absolute authorization windows and the last agent-observed verification date; never summarize a moving relative window.
 13. If invoked just in time, return control to the original skill with the verified configuration and remaining limitations.
+
+## Choosing a path
+
+When `context.md` reads `Setup status: Incomplete` and the first prompt does not pick a path, offer two in one short message:
+
+1. **Try it now.** Name your company and its website. I read a few public pages, fill in your context, and you correct it.
+2. **Full setup.** Connect your tools and definitions so analytics, tickets, and meetings work. You can stop and resume.
+
+When the first prompt already picks one, say which path you are taking and start it. "Help me set it up" is full setup. "Here's my company" is the trial. Count anything the user already said as answered. Never re-offer a path the user declined.
+
+## Trial mode
+
+1. Ask for the company name and website in one message, unless the user already gave them. If the name could match more than one company, read at most 3 pages and offer at most 5 candidates, each with a one-line reason. Wait for the user to confirm one.
+2. Run `analyze-product-context` in public mode on the user's product, with the purpose "workspace pre-fill". Read 3 or 4 first-party pages and at most 10 pages in total.
+3. Show a summary of at most 5 lines. Mark what was read and what was inferred, and list what could not be found. Treat corrections as expected.
+4. Rank the remaining unconfirmed items by impact times uncertainty. Ask at most 5 questions, one at a time, with the recommended answer first.
+   - Recommend only from cited evidence.
+   - For metrics, identity, permissions, and definitions, offer "leave as gap", never a guessed value.
+   - "Yes" accepts the recommendation. "Stop" or "done" ends the loop.
+   - Put unasked items in a Deferred list.
+5. Show the full profile before writing. Write `context.md` only after the user approves. Set `Setup status: Trial`. Tag values the user confirmed or corrected `confirmed`, and keep the rest `unconfirmed`.
+6. Record `public-web` as a source row with status `partial`. The pages read are its smoke test, with their absolute retrieval date.
+7. Offer 3 starter questions answerable from public evidence. Each one says why it is a good start and which public evidence answers it. Add "ask your own".
+   - Lean toward product questions: where reviewers get stuck, how plans compare with a confirmed alternative, or what shipped since a date and what the help docs say users struggle with.
+   - Resolve every date to an absolute date.
+   - Label results "public evidence only".
+8. When a later request needs a private source, set up only that skill's prerequisites in just-in-time mode. Mark skills whose missing sources only reduce coverage as partial.
+9. On a return session, show the saved profile, ask what changed, and update only the fields that changed.
+10. Produce every required output field. Mark skills that need private sources blocked, with the next action.
 
 <!-- CORE:BEGIN -->
 ## Safety

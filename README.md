@@ -13,16 +13,16 @@ Agents identify problems, assemble evidence, explain uncertainty, and present op
 When starting in this repository:
 
 1. Read AGENTS.md, context.md, task.md, and relevant entries in index.md.
-2. If setup is incomplete, follow SETUP.md one question at a time.
+2. If setup is incomplete, offer a trial or full setup through configure-workspace unless the first prompt already picks one.
 3. Use a project folder for substantial work and the relevant provider-neutral skills.
 4. Return evidence, options, confidence, and trade-offs for the PM's decision.
 5. Maintain task.md, log.md, and index.md as defined in AGENTS.md; route reusable learnings through improve-skills.
 
 ## User quick start
 
-1. Clone the repository and run `./setup.sh`. It validates the workspace, creates an untracked owner-only `.env` when needed, and exposes canonical skills through supported local discovery paths.
+1. Clone the repository. Optionally run `./setup.sh` so your agent can call skills by name. It validates the workspace, creates an untracked owner-only `.env` when needed, and exposes canonical skills through supported local discovery paths.
 2. Open the folder in your agent. For a custom CLI, have it read README.md and AGENTS.md and use `skills/` as its skill source.
-3. Say: “Use configure-workspace to help me set up this product workspace.”
+3. Say “Try it with <your company and website>” to see results from public sources first, or “Use configure-workspace to help me set up this product workspace” for full setup.
 4. The agent collects product context and, when permitted, verifies task-relevant sources with bounded read-only checks.
 5. Resolve only blockers needed for the first task; unrelated gaps may remain partial.
 6. Start with a product question such as: “Help me understand why retention for Feature X is declining.”
