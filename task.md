@@ -2,23 +2,35 @@
 
 ## Goal
 
-Ship v0.4.0 guarded self-improvement: immutable core regions, origin-anchored drift detection, machine-checkable output contracts, and git-native versioning.
+Ship v0.5.0: optional setup with a trial path, and PM-first upgrades to existing skills (product context, competitive analysis, customer evidence, prototyping) sharing one public-research method. No new skills. Each upgrade is built on a screened existing skill and leans toward PMs by default while staying usable by anyone.
 
 ## Status
 
-Implementation complete. Deterministic checks pass: `./setup.sh --check` clean across 16 skills and 33 core regions, `evals/test-guardrails.sh` 13/13.
+Design and implementation plan written in `docs/plans/` (2026-10-03). No skill files changed yet.
 
-Behavioral evaluation recorded in `evals/results/2026-08-30-v0.4.0-guardrails/RESULTS.md`. Scenarios 12, 13, 14, and 15 PASS at `k = 1`, with scenarios 12 and 14 re-run blind on 2026-09-06 under corrected isolation. Scenario 12's PASS is not robust to stricter wording of criteria B2 and B4.
+v0.4.0 is committed (`b936ab5`) and merged (`ff0d824`). The v0.4.1 docs shipped in `c285b8e` and `b196b99`.
 
-Uncommitted. The working tree holds all v0.4.0 changes and has not been committed or pushed.
+The `core-origin` tag exists, so drift is now measured against it.
+
+`./setup.sh` was run locally on 2026-10-02. All 16 skills are linked in `.agents/skills/` and `.claude/skills/`. `./setup.sh --check` reports 16 skills valid, cores match `core.sha256`, and no pending items.
 
 ## Blockers
 
-None. The `core-origin` tag does not exist in the published repository yet, so drift is reported as unmeasured until it is tagged.
+None.
+
+## Open items (not decided)
+
+1. Decide whether to tighten scenario 12 criteria B2 and B4, which currently require grader judgment. This is a human specification change and creates a new scenario version. Trials 12b and 12c disagreed on B2.
+2. Run the suite at `k >= 5` with per-scenario paired deltas. This has never been run.
+
+## Candidates (not decided)
+
+The PM has not chosen any of these. They are options, not plans.
+
+- v0.6 skills: `record-decision`, `write-spec`, `review-brief`, `design-experiment`.
 
 ## Next action
 
-1. Review the diff and commit v0.4.0. Nothing is committed yet.
-2. Tag `core-origin` on the reviewed baseline so drift stops reporting as unmeasured.
-3. Decide whether to tighten scenario 12 criteria B2 and B4, which currently require grader judgment. This is a human specification change and creates a new scenario version.
-4. Run the suite at `k >= 5` with per-scenario paired deltas, which v0.4.0 specifies but has not yet run. Trial 12b and 12c disagreed on B2, so that criterion is the known unstable one.
+1. PM picks the execution mode for `docs/plans/2026-10-03-v0.5.0-implementation-plan.md` (subagent-driven recommended).
+2. Execute Setup, then Tasks 1–6. Task 7 is the PM release review.
+3. Open: confirm the license on OpenAI's `agent/refresh-role-plugins` branch, or keep `build-competitive-brief` as ideas only.
