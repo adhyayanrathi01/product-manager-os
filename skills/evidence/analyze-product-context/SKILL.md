@@ -60,7 +60,7 @@ Use public mode when the source is the product's public web presence, including 
    - integrations
    - the company's own terms for its features
 
-   Read company history, funding, or team pages only when asked.
+   Read company history, funding, or team pages only when asked, or when a search result contradicts a first-party page. In that case read the full page and report the conflict.
 4. Classify what a first-party public page publishes as **Approved/current** only as published behavior on its retrieval date, and mark it `public` in the source register's authority column. It does not show internal approval. A changelog shows intent and release, not adoption. A marketing claim is a fact only about what the company says. Grade third-party pages by the source classes in `public-research-method.md`. Every claim still gets its status under Process step 7.
 5. Internal documentation outranks public pages on what is approved internally, not on what is published. Report every conflict between them, or with a confirmed `context.md` value, under Process step 8. Never overwrite a confirmed value.
 6. For a workspace pre-fill, map findings to these `context.md` sections:
