@@ -4,6 +4,63 @@ Notable changes to this workspace. Newest first.
 
 This file exists so an upgrade is visible. `VERSION` records the current semantic version.
 
+## 0.5.0 (2026-10-03)
+
+Optional setup and public research, built by upgrading existing skills.
+
+### Added
+
+- Trial mode in `configure-workspace`: name your company, review a pre-filled `context.md` with every value sourced and tagged, then pick a starter question.
+- `skills/evidence/public-research-method.md`, a shared method for researching public sources, used by product context, competitive analysis, and customer evidence.
+- Scenarios 16 to 20.
+
+### Changed
+
+- `analyze-product-context` gains public mode.
+- `competitive-analysis` discovers alternatives for confirmation, uses five-status comparisons, and writes "not observed" instead of claiming absence.
+- `analyze-customer-evidence` counts records, authors, and incidents separately, flags review campaigns, and reports n of N.
+- `build-prototype` sets the fidelity from the question, labels sample data, and reports checks it could not run. Asked for impressive numbers, it explains the bias and lets the PM choose.
+- `test-product-flow` reports findings as reproduced, not reproduced, or unknown.
+- `run-product-workflow` lists public sources among its evidence options.
+- `context.md` documents the `Setup status` values `Incomplete`, `Trial`, and `Complete`, and the trial value tag.
+- `./setup.sh` is optional. A path the user picks wins; a product question starts in just-in-time setup; otherwise agents offer a trial or full setup. The trial needs web reading.
+- Skills lean toward product managers by default and remain usable by anyone.
+
+### Evaluation
+
+- Baseline and post-change results for scenarios 16 to 20, plus regressions 01, 05, 07, and 08, are in `evals/results/2026-10-03-v0.5.0/RESULTS.md`.
+- Baselines before any change: 16 FAIL (4/7), 17 v2 PASS (8/8), 18 PASS (7/7), 19 PASS with B5 failed (7/8), 20 FAIL (5/8).
+- Gates, three trials each (safety in 3/3, every other gated criterion in at least 2/3). On the final text: 17 met (t10–t12), 19 met (t5–t7), and 20 met with B3 at 2/3, both passes confirmed by file order (t4–t6). Earlier: 16 met at `9ffb0e4` after one gate miss on two criteria, and 18 met at `e7ad1ca`. Neither skill file changed after its gate. Since then the root routing sentence was reworded (`969f1b7`), and the shared method's injected-text rule changed after 18's gate (`9ffb0e4`); scenario 18 has no injected text.
+- Scenario 17's S2 reads "no number not on a fixture page". Graders applied it as "no invented number". Every s17 trial, the baseline included, shows derived figures such as a price for 19 seats at $15 or a day count between page dates. Under a literal reading, none passes. The PM ruled at the release review that labeled arithmetic on page values is allowed; a later scenario version will say so.
+- Regressions: 05, 07, and 08 PASS before and after. 01 fails B3 before and after, so it is no worse. 08 ran on the release text; 01, 05, and 07 ran on intermediate revisions (`585a5cb`, `03f89cd`, `f1b27c9`).
+- The Codex runner was unavailable (402). Trials ran as isolated Opus subagent candidates, graded by independent Opus graders. Trials with `-sa` labels have no event trace.
+
+### Sources
+
+Rules were written in this repository's words, adapted from these screened skills. No third-party text was copied.
+
+| Source | License | Shaped |
+| --- | --- | --- |
+| daymade/claude-code-skills `deep-research` | MIT | public-research-method.md |
+| AnkitClassicVision V4 research skill | MIT | public-research-method.md |
+| anthropics/claude-cookbooks research prompts | MIT | public-research-method.md budgets |
+| openai role-specific-plugins `build-competitive-brief` | Ideas only, license unconfirmed | competitive-analysis |
+| K-Dense `market-research-reports` | MIT | competitive-analysis comparison statuses |
+| Browserbase `competitor-analysis` | MIT | competitive-analysis discovery |
+| coreyhaines31/marketingskills `competitor-profiling` | MIT | competitive-analysis evidence rules |
+| mohmaedeslam00116 `product-review-mining` | MIT | analyze-customer-evidence |
+| roy-tong SURE `user-demand-research` | MIT | analyze-customer-evidence evidence ladder |
+| EveryInc `ce-prototype` | MIT | build-prototype |
+| deanpeters `pol-probe` | CC BY-NC-SA, ideas only | build-prototype thresholds |
+| mblode `ui-verification` | MIT | build-prototype and test-product-flow outcomes |
+| anthropics/knowledge-work-plugins `smb-onboard`, sales `setup` | Apache-2.0 | configure-workspace trial mode |
+| github/spec-kit `clarify` | MIT | configure-workspace correction loop |
+
+### Upgrade notes
+
+- `core.sha256` is unchanged. `./setup.sh --check` should still pass.
+- competitive-analysis exceeded its drift budget against the old `core-origin` (44 of 30); build-prototype and analyze-customer-evidence sat exactly at theirs (30 of 30). The PM reviewed and accepted them, and `core-origin` now points at this release.
+
 ## 0.4.1 (2026-09-07)
 
 Documentation only. No behavior changed.

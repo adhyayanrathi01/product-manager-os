@@ -44,6 +44,7 @@
 | File | Purpose |
 | --- | --- |
 | skills/evidence/evidence-handoff.md | Evidence packet contract |
+| skills/evidence/public-research-method.md | Shared method for researching public sources |
 | skills/learning/improve-skills/references/improvement-payload.md | Manual and automatic improvement input contract |
 | evals/check-output.sh | Verifies an artifact against the output contract its skill declares |
 | evals/test-guardrails.sh | Self-check that every guardrail fails when it should |

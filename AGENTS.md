@@ -3,7 +3,7 @@
 ## Start here
 
 - Read README.md, context.md, task.md, and relevant index.md entries before substantial work.
-- If setup is incomplete, use configure-workspace and SETUP.md. For an active task, collect only task-critical scope, sources, permissions, privacy, identity, and definitions; leave unrelated fields as gaps.
+- If `Setup status` in context.md is `Incomplete`: a path the first prompt picks wins; with no pick, a product question or task starts in just-in-time setup, and any other prompt gets the trial-or-full-setup offer through configure-workspace. Offer the trial only when web reading is available. Follow SETUP.md for full setup. For an active task, collect only task-critical scope, sources, permissions, privacy, identity, and definitions; leave unrelated fields as gaps.
 - If a named skill is unavailable, follow its canonical `skills/**/SKILL.md`; missing registration does not mean a missing workflow.
 
 ## Preserve PM decision-making

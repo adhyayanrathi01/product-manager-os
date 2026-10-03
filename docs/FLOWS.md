@@ -12,9 +12,11 @@ Written for someone about to use this, not for someone reading the code. Each pa
 
 ## 1. Getting set up
 
-Clone the repo and run `./setup.sh`. That takes a minute and only checks that the files are where they should be.
+Clone the repo. Running `./setup.sh` is optional. It checks the files and lets your agent call skills by name.
 
-Then it asks you questions. Which tools do you use. Which ones are you allowed to read. How does your company define an active user, a churned account, a week. It writes your answers into a file called `context.md`, and every skill reads that file before it does anything.
+You can start two ways, or skip both and ask a product question; it then sets up only what that question needs. **Try it** by asking to try it and naming your company and website. It reads a few public pages, such as your site, pricing, help center, and changelog, and fills in `context.md` with each value marked unconfirmed. You correct it, then pick one of three starter questions that public evidence can answer. **Full setup** is the rest of this section.
+
+For full setup, it asks you questions. Which tools do you use. Which ones are you allowed to read. How does your company define an active user, a churned account, a week. It writes your answers into a file called `context.md`, and every skill reads that file before it does anything.
 
 The definitions part is the bit people skip and then regret. If you never say what "active user" means, every number you get back is measuring something you did not ask for.
 
@@ -24,8 +26,11 @@ Every tool ends up as **ready**, **partial**, or **blocked**. When a tool is blo
 
 ```mermaid
 flowchart LR
-    A[Clone] --> B[Run setup.sh]
-    B --> C[Answer questions about<br/>your tools and definitions]
+    A[Clone] --> B{First message}
+    B -->|Try it| T[Name your company]
+    T --> P[It reads public pages<br/>and fills your context]
+    P --> F[You correct it, then<br/>pick a starter question]
+    B -->|Full setup| C[Answer questions about<br/>your tools and definitions]
     C --> D[It test-reads each tool]
     D --> E[Ready, partial, or blocked]
 ```

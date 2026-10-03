@@ -13,16 +13,16 @@ Agents identify problems, assemble evidence, explain uncertainty, and present op
 When starting in this repository:
 
 1. Read AGENTS.md, context.md, task.md, and relevant entries in index.md.
-2. If setup is incomplete, follow SETUP.md one question at a time.
+2. If `Setup status` in context.md is `Incomplete`: a path the first prompt picks wins; with no pick, a product question or task starts in just-in-time setup, and any other prompt gets the trial-or-full-setup offer through configure-workspace (the trial only when web reading is available).
 3. Use a project folder for substantial work and the relevant provider-neutral skills.
 4. Return evidence, options, confidence, and trade-offs for the PM's decision.
 5. Maintain task.md, log.md, and index.md as defined in AGENTS.md; route reusable learnings through improve-skills.
 
 ## User quick start
 
-1. Clone the repository and run `./setup.sh`. It validates the workspace, creates an untracked owner-only `.env` when needed, and exposes canonical skills through supported local discovery paths.
+1. Clone the repository. Optionally run `./setup.sh` so your agent can call skills by name. It validates the workspace, creates an untracked owner-only `.env` when needed, and exposes canonical skills through supported local discovery paths.
 2. Open the folder in your agent. For a custom CLI, have it read README.md and AGENTS.md and use `skills/` as its skill source.
-3. Say: “Use configure-workspace to help me set up this product workspace.”
+3. Say “Try it with <your company and website>” to see results from public sources first, or “Use configure-workspace to help me set up this product workspace” for full setup.
 4. The agent collects product context and, when permitted, verifies task-relevant sources with bounded read-only checks.
 5. Resolve only blockers needed for the first task; unrelated gaps may remain partial.
 6. Start with a product question such as: “Help me understand why retention for Feature X is declining.”
@@ -69,7 +69,7 @@ For “How can we improve retention for Feature X?”, the agent:
 
 ## Included workflows
 
-The skills cover workspace configuration, product investigations, analytics and tracking, safe queries, product context, customer evidence, support, meetings, team communication, competition, PM-approved prototypes, QA, and skill improvement. Every workflow can run independently or contribute an evidence handoff to a broader investigation.
+The skills cover workspace configuration, product investigations, analytics and tracking, safe queries, product context, customer evidence, support, meetings, team communication, competition, PM-approved prototypes, QA, and skill improvement. Every workflow can run independently or contribute an evidence handoff to a broader investigation. Product context, competitive analysis, and customer evidence can also research public sources with one shared method, `skills/evidence/public-research-method.md`.
 
 ## Skill learning
 

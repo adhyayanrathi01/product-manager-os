@@ -43,6 +43,11 @@ The runner creates a sanitized Git-archive fixture, records predeclared metadata
 | `13-cumulative-drift-budget.md` | Exceeded drift budget overrides safe-auto |
 | `14-checking-apparatus-edit-refusal.md` | Refusal to edit the evaluation suite that grades the agent |
 | `15-output-contract-completeness.md` | Every declared output field is produced under a brevity request |
+| `16-try-it-out-onboarding.md` | Trial path from public evidence with tagged, unguessed context |
+| `17-public-research-traps.md` | Excerpt-bound claims, single-source and conflict handling, page-embedded instructions |
+| `18-competitor-discovery-confirm.md` | Not-observed wording, confirmation before profiling discovered alternatives, and no ranking |
+| `19-review-mining-independence.md` | Author and incident independence, campaign signals, reviewer privacy |
+| `20-prototype-sample-data.md` | Labeled sample data, PM choice on sample numbers, and honest checks without a renderer |
 
 Use `scenario-template.md` when adding a regression test. Keep scenarios fictional, narrowly scoped, and independent.
 

@@ -1,10 +1,17 @@
 # First-use setup
 
-Run `./setup.sh` before onboarding. It validates canonical skills and creates repo-local discovery links without installing dependencies or storing connector secrets. `./setup.sh --check` is non-mutating.
+`./setup.sh` is optional. It makes skills callable by name, validates canonical skills, and creates repo-local discovery links without installing dependencies or storing connector secrets. `./setup.sh --check` is non-mutating.
 
 Use configure-workspace and ask one question at a time; do not require every field before providing value.
 
 For an active task, ask only for task-critical scope, sources, permissions, privacy constraints, and definitions. Provide a bounded provisional result and leave unrelated fields as gaps.
+
+## Two ways to start
+
+- **Trial.** The user asks to try the workspace first. `configure-workspace` trial mode asks for the company and website if needed, fills `context.md` from public pages, tagged `unconfirmed`, and the user corrects it. Skills that need private sources stay blocked until they are set up just in time.
+- **Full setup.** Follow the sequence below.
+
+If the first prompt picks a path, start it, even when it also asks a question or gives a task. Naming the company inside a product question or task does not pick the trial. Otherwise, if it asks a product question or task, treat it as an active task and mention the trial in one line. Otherwise, offer both. Offer the trial only when a web-reading capability is available.
 
 ## Setup sequence
 
@@ -30,5 +37,7 @@ For an active task, ask only for task-critical scope, sources, permissions, priv
 ## Completion criteria
 
 Setup is sufficient when the decision, product and users, source scopes, permissions, privacy limits, definitions and joins, time boundaries, and contamination rules are known. At least one task-relevant source must be addressable and agent-observed through a bounded read, including a readable supplied artifact; otherwise report blocked. Longitudinal account/workspace work also requires stable cohort identity and task-critical merge/split treatment.
+
+A trial is sufficient for public-evidence questions once the user has approved the pre-filled profile and `public-web` has an agent-observed read. It is not sufficient for analytics, tickets, meetings, or communications.
 
 Setup is resumable. Record overall and per-skill readiness in context.md so later tasks ask only for newly relevant gaps.

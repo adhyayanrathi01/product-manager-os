@@ -23,7 +23,7 @@ description: "Test a product flow against acceptance criteria across relevant pe
 4. Test the critical path, alternate states, permissions, errors, empty states, and recovery.
 5. Verify important analytics behavior when observable.
 6. Capture reproducible evidence without exposing credentials or personal data.
-7. Distinguish confirmed defects, usability concerns, instrumentation gaps, and untested areas.
+7. Distinguish confirmed defects, usability concerns, instrumentation gaps, and untested areas. Mark each finding reproduced, not reproduced, or unknown. A skipped check is not a pass, and a route behind a login with no seeded session is unknown.
 8. Report severity, affected role, reproduction steps, expected behavior, and actual behavior.
 9. Do not deploy fixes or change production without explicit approval.
 10. Save reusable test cases or findings in the project.
