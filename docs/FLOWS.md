@@ -14,7 +14,7 @@ Written for someone about to use this, not for someone reading the code. Each pa
 
 Clone the repo. Running `./setup.sh` is optional. It checks the files and lets your agent call skills by name.
 
-You can start two ways. **Try it** by naming your company and website. It reads a few public pages, such as your site, pricing, help center, and changelog, and fills in `context.md` with each value marked unconfirmed. You correct it, then pick one of three starter questions that public evidence can answer. **Full setup** is the rest of this section.
+You can start two ways, or skip both and ask a product question; it then sets up only what that question needs. **Try it** by asking to try it and naming your company and website. It reads a few public pages, such as your site, pricing, help center, and changelog, and fills in `context.md` with each value marked unconfirmed. You correct it, then pick one of three starter questions that public evidence can answer. **Full setup** is the rest of this section.
 
 For full setup, it asks you questions. Which tools do you use. Which ones are you allowed to read. How does your company define an active user, a churned account, a week. It writes your answers into a file called `context.md`, and every skill reads that file before it does anything.
 

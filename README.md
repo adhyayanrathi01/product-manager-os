@@ -13,7 +13,7 @@ Agents identify problems, assemble evidence, explain uncertainty, and present op
 When starting in this repository:
 
 1. Read AGENTS.md, context.md, task.md, and relevant entries in index.md.
-2. If `Setup status` in context.md is `Incomplete`, a path the first prompt picks wins. Otherwise a product question or task starts in just-in-time setup, and anything else gets the trial-or-full-setup offer through configure-workspace.
+2. If `Setup status` in context.md is `Incomplete`: a path the first prompt picks wins; with no pick, a product question or task starts in just-in-time setup, and any other prompt gets the trial-or-full-setup offer through configure-workspace (the trial only when web reading is available).
 3. Use a project folder for substantial work and the relevant provider-neutral skills.
 4. Return evidence, options, confidence, and trade-offs for the PM's decision.
 5. Maintain task.md, log.md, and index.md as defined in AGENTS.md; route reusable learnings through improve-skills.
