@@ -69,7 +69,7 @@ For “How can we improve retention for Feature X?”, the agent:
 
 ## Included workflows
 
-The skills cover workspace configuration, product investigations, analytics and tracking, safe queries, product context, customer evidence, support, meetings, team communication, competition, PM-approved prototypes, QA, and skill improvement. Every workflow can run independently or contribute an evidence handoff to a broader investigation.
+The skills cover workspace configuration, product investigations, analytics and tracking, safe queries, product context, customer evidence, support, meetings, team communication, competition, PM-approved prototypes, QA, and skill improvement. Every workflow can run independently or contribute an evidence handoff to a broader investigation. Product context, competitive analysis, and customer evidence can also research public sources with one shared method, `skills/evidence/public-research-method.md`.
 
 ## Skill learning
 

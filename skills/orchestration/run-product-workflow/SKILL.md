@@ -29,7 +29,8 @@ description: "Coordinate an evidence-backed product investigation from an ambigu
    - meetings and team communications;
    - other customer and stakeholder evidence;
    - competitive alternatives;
-   - product, design, or technical context.
+   - product, design, or technical context;
+   - public sources: your own product, alternatives, and public reviews, through `analyze-product-context`, `competitive-analysis`, and `analyze-customer-evidence`.
 6. Select evidence in this order: the source that measures the outcome, the closest source that can explain user or product context, then a contradictory or validating source. Expand only when the current evidence cannot distinguish material hypotheses, has a known coverage gap, or is stale for the decision.
 7. Stop gathering when additional evidence is unlikely to change the option set, confidence, or next validation step. Record the stopping reason.
 8. Discover available tools and sources. State important evidence gaps rather than blocking all progress.
