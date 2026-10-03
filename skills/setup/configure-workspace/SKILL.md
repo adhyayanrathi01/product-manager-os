@@ -108,8 +108,8 @@ Trial mode replaces Process steps 3–9. Process steps 1, 2, and 10–12 still a
    - Put unasked items in a Deferred list.
 5. Show the full profile before writing. Write `context.md` only after the user approves, and set its `**Setup status:**` field to `Trial`. Tag a value `confirmed` only when the user checked or corrected that value. Approving the whole profile, or a yes given before a value was shown, does not confirm it. Keep every other value `unconfirmed`.
 6. Record `public-web` as a source row with status `partial`, because it covers public pages only: what the company publishes, not internal approval, usage, or support volume. The pages read are its smoke test, with their absolute retrieval date.
-7. Offer 3 starter questions answerable from public evidence. Each one says why it is a good start and which public evidence answers it. Add "ask your own".
-   - Lean toward product questions: where reviewers get stuck, how plans compare with a confirmed alternative, or what shipped since a date and what the help docs say users struggle with.
+7. Offer 3 starter questions answerable from the pages already read. Each one says why it is a good start and which of those pages answers it. Add "ask your own".
+   - Lean toward product questions, such as what shipped since a date, what the help docs say users struggle with, or what each plan gates. Suggest comparing with an alternative only after the user confirms one and its pages are read.
    - Resolve every date to an absolute date.
    - Label results "public evidence only".
 8. When a later request needs a private source, set up only that skill's prerequisites in just-in-time mode. Mark skills whose missing sources only reduce coverage as partial.
