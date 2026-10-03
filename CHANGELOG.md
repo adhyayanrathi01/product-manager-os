@@ -4,6 +4,20 @@ Notable changes to this workspace. Newest first.
 
 This file exists so an upgrade is visible. `VERSION` records the current semantic version.
 
+## 0.5.1 (2026-10-03)
+
+Records and attribution only. No skill or behavior changed.
+
+### Added
+
+- `NOTICE.md` lists three short phrases that closely follow MIT-licensed sources, with their copyright lines and the MIT permission notice.
+
+### Changed
+
+- The 0.5.0 Sources line no longer says no third-party text was copied. A secrets and privacy scan of the 0.5.0 push found three short matching phrases and nothing else.
+- `RESULTS.md` says where the subagent trial records live: each trial's final message, diff, status, hashes, and grader report are kept locally under `runs/`, which git ignores, so they are not public.
+- `task.md` and `log.md` record that `main` and `core-origin` were pushed on 2026-10-03.
+
 ## 0.5.0 (2026-10-03)
 
 Optional setup and public research, built by upgrading existing skills.
@@ -37,7 +51,7 @@ Optional setup and public research, built by upgrading existing skills.
 
 ### Sources
 
-Rules were written in this repository's words, adapted from these screened skills. No third-party text was copied.
+Rules were written in this repository's words, adapted from these screened skills. No substantial third-party text was copied; three short phrases closely follow MIT-licensed sources and are credited in `NOTICE.md` (corrected in 0.5.1).
 
 | Source | License | Shaped |
 | --- | --- | --- |
