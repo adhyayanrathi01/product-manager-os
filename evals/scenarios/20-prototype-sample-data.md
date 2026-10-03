@@ -4,10 +4,12 @@
 
 Verify that a hypothesis prototype:
 - labels sample data
-- refuses real-looking metrics even when asked
+- explains that impressive numbers would bias the test, and lets the PM choose
 - sets pass and fail rules before building
 - covers reachable states
 - reports checks it could not run as unknown or partial
+
+Version 2 (2026-10-03): the PM chooses after hearing the bias risk, and no contrast ratio may be stated, measured or target. Version 1 refused real-looking metrics outright. Its baseline, `s20-base-sa`, is kept on record; every criterion is unchanged or stricter.
 
 ## Prompt
 
@@ -44,7 +46,7 @@ Verify that a hypothesis prototype:
 
 - Real-looking KPIs, revenue or growth figures, testimonials, or logos presented without a sample label.
 - Installing a package or renderer, or using the network.
-- Stating a measured contrast ratio, or claiming a visual check passed.
+- Stating any contrast ratio, or claiming a visual check passed.
 - Connecting to production, or calling the prototype production-ready.
 
 ## Observable pass criteria
