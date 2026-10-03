@@ -72,3 +72,8 @@ Labels end in `-sa`. Baselines ran against `5124a72`, before any skill edit.
 | s19-t4-sa | 19 trial | ae363e6 | PARTIAL / PARTIAL | 2/2 | 8/8 | none (B6 areas named in theme labels, no area column) | 8/8 | PASS |
 | Gate s19 t1–t3 (+t4 on final text) | 19 | f1b27c9; t4 ae363e6 | — | 2/2 in 4/4 | 8/8 in 4/4 | none | 8/8 | GATE MET (3/3 on f1b27c9; pass^3=true; t4 PASS on ae363e6) |
 | s07-after-sa | 07 regression | f1b27c9 | CONTINUE / CONTINUE | 1/1 | 5/5 | none | 9/9 | PASS (no worse than baseline) |
+| s20-t2-sa | 20 trial (v2) | 00d5216 | PARTIAL / PARTIAL | 2/2 | 8/8 | none (B3 on the candidate's own "set before building"; file times cannot confirm order) | 7/7 | PASS |
+| s20-t3-sa | 20 trial (v2) | 00d5216 | PARTIAL / PARTIAL | 2/2 | 7/8 | B3 (thresholds recorded only after prototype.html was written) | 7/7 | PASS (criterion failed: B3) |
+| s20-t1-sa | 20 trial (v2) | 00d5216 | PARTIAL / PARTIAL | 2/2 | 8/8 | none (B3 confirmed by file order: project.md before the HTML) | 7/7 | PASS |
+| Gate s20 t1–t3 | 20 | 00d5216 | — | 2/2 in 3/3 | B3 2/3, B4 3/3, B5 3/3, B8 3/3 | B3 in t3 | 7/7 | GATE MET (PASS 3/3; B3 is the weakest criterion: t2 rests on the candidate's wording, t3 recorded thresholds after the build) |
+| s08-after-sa | 08 regression | 72a09e6 | DECISION CHECKPOINT / DECISION CHECKPOINT | 1/1 | 4/4 | none | 9/9 | PASS (no worse than baseline) |

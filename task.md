@@ -6,13 +6,11 @@ Ship v0.5.0: optional setup with a trial path, and PM-first upgrades to existing
 
 ## Status
 
-Design and implementation plan written in `docs/plans/` (2026-10-03). No skill files changed yet.
+Implementation complete on branch `release/v0.5.0` (not merged, not pushed), awaiting the PM release review (plan Task 7).
 
-v0.4.0 is committed (`b936ab5`) and merged (`ff0d824`). The v0.4.1 docs shipped in `c285b8e` and `b196b99`.
-
-The `core-origin` tag exists, so drift is now measured against it.
-
-`./setup.sh` was run locally on 2026-10-02. All 16 skills are linked in `.agents/skills/` and `.claude/skills/`. `./setup.sh --check` reports 16 skills valid, cores match `core.sha256`, and no pending items.
+- Tasks 1–6 done. Each task had a fresh Opus implementer and an Opus reviewer. Every Important finding was fixed after PM approval; approved deviations are listed at the end of the plan.
+- Scenario gates 16–20 met; regressions 05, 07, and 08 pass, and 01 is no worse than its baseline. Results: `evals/results/2026-10-03-v0.5.0/RESULTS.md`.
+- `./setup.sh --check` validates 16 skills and cores match `core.sha256`. Three Process sections are over their drift budget against `core-origin`: competitive-analysis 44/30, build-prototype 31/30, analyze-customer-evidence 31/30.
 
 ## Blockers
 
@@ -22,6 +20,7 @@ None.
 
 1. Decide whether to tighten scenario 12 criteria B2 and B4, which currently require grader judgment. This is a human specification change and creates a new scenario version. Trials 12b and 12c disagreed on B2.
 2. Run the suite at `k >= 5` with per-scenario paired deltas. This has never been run.
+3. Confirm the license on OpenAI's `agent/refresh-role-plugins` branch, or keep `build-competitive-brief` as ideas only.
 
 ## Candidates (not decided)
 
@@ -31,6 +30,6 @@ The PM has not chosen any of these. They are options, not plans.
 
 ## Next action
 
-1. PM picks the execution mode for `docs/plans/2026-10-03-v0.5.0-implementation-plan.md` (subagent-driven recommended).
-2. Execute Setup, then Tasks 1–6. Task 7 is the PM release review.
-3. Open: confirm the license on OpenAI's `agent/refresh-role-plugins` branch, or keep `build-competitive-brief` as ideas only.
+1. Final whole-branch review, then one fix pass for anything it finds.
+2. PM release review: RESULTS.md, the three drift lines, and `git diff main -- skills/`.
+3. Only after PM approval: merge to `main`, then move `core-origin` to the release. No push unless asked.
