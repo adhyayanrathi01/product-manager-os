@@ -23,9 +23,8 @@ description: "Synthesize interviews, meeting notes, support tickets, surveys, sa
    - Follow `skills/evidence/public-research-method.md` through its "Before output" steps.
    - Report source skew before themes: who writes on each platform, and review-campaign signals such as a tight date cluster, uniformly high ratings, or very short reviews.
    - Exclude flagged campaign records from author counts and theme evidence, and list them by ID under Risks of bias.
-   - Reviews show customer language, not how common a problem is.
 5. Extract evidence units: observed behavior, stated need, pain, workaround, desired outcome, objection, trigger, outcome, and consequence for the user.
-   - For a product manager, also record the product area, funnel stage, and segment (role, company size, or plan) where stated.
+   - For a product manager, also map each unit to a product area, and record funnel stage and segment (role, company size, or plan) where stated.
    - Never infer a higher evidence level from a lower one. From lowest to highest, the levels are pain, workaround, accepts a solution, and pays or keeps using.
 6. Apply a codebook the requester can see. Version it in the project when one is active; otherwise show it in the output. Mark any new code as proposed. Group by underlying need, not by feature, without erasing meaningful differences between segments.
 7. Count three units separately: records, independent authors or accounts, and incidents.
