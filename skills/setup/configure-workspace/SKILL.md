@@ -83,14 +83,16 @@ Do not block one skill because an unrelated source is unavailable.
 
 ## Choosing a path
 
-When the `**Setup status:**` field in `context.md` is `Incomplete` and the first prompt neither picks a path nor asks a product question, offer two in one short message:
+When the `**Setup status:**` field in `context.md` is `Incomplete` and the first prompt neither picks a path nor asks a product question or task, offer two in one short message:
 
 1. **Try it now.** Name your company and its website. I read a few public pages, fill in your context, and you correct it.
 2. **Full setup.** Connect your tools and definitions so analytics, tickets, and meetings work. You can stop and resume.
 
 When the first prompt already picks one, say which path you are taking and start it. "Help me set it up" is full setup. "Here's my company" is the trial. Count anything the user already said as answered. Never re-offer a path the user declined.
 
-A first prompt that asks a product question is an active task. Start on it in just-in-time mode, setting up only what that question needs. Add one line saying the user can also try the workspace on their public pages first. Offer the trial only when a web-reading capability is available. Otherwise, say the trial is blocked and continue with full or just-in-time setup.
+A path the user picks always wins, even when the prompt also asks a question. Otherwise, a first prompt that asks a product question or task is an active task: start on it in just-in-time mode, setting up only what it needs, and add one line saying the user can also try the workspace on their public pages first.
+
+Offer or start the trial only when a web-reading capability is available. Without one, say the trial is blocked and offer full setup instead.
 
 ## Trial mode
 
