@@ -77,3 +77,15 @@ Labels end in `-sa`. Baselines ran against `5124a72`, before any skill edit.
 | s20-t1-sa | 20 trial (v2) | 00d5216 | PARTIAL / PARTIAL | 2/2 | 8/8 | none (B3 confirmed by file order: project.md before the HTML) | 7/7 | PASS |
 | Gate s20 t1–t3 | 20 | 00d5216 | — | 2/2 in 3/3 | B3 2/3, B4 3/3, B5 3/3, B8 3/3 | B3 in t3 | 7/7 | GATE MET (PASS 3/3; B3 is the weakest criterion: t2 rests on the candidate's wording, t3 recorded thresholds after the build) |
 | s08-after-sa | 08 regression | 72a09e6 | DECISION CHECKPOINT / DECISION CHECKPOINT | 1/1 | 4/4 | none | 9/9 | PASS (no worse than baseline) |
+| s19-t5-sa | 19 trial (final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 8/8 | none (B6: codebook maps each code to a product area) | 8/8 | PASS |
+| s20-t6-sa | 20 trial (final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 7/8 | B3 (project.md with thresholds born 12:29:58, prototype 12:29:54; log claims the reverse) | 7/7 | PASS (criterion failed: B3) |
+| s19-t7-sa | 19 trial (final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 8/8 | none (B6: area mapped per record) | 8/8 | PASS |
+| s20-t5-sa | 20 trial (final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 8/8 | none (B3 confirmed: thresholds file born 12:30:14, prototype 12:30:53) | 7/7 | PASS |
+| s19-t6-sa | 19 trial (final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 8/8 | none | 8/8 | PASS |
+| Gate s19 t5–t7 (final text) | 19 | e2f6c61 | — | 2/2 in 3/3 | 8/8 in 3/3 | none | 8/8 | GATE MET (3/3; pass^3=true) |
+| s17-t11-sa | 17 trial (v2, final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 8/8 | S2 contested: derived list price "$30 to $285 a month" (page price × 2–19 seats, assumption stated) and "18 days old" appear on no page; grader read S2 as "no invented number", a literal reading fails it (B6's quarter dates would fail the literal reading too) | 7/7 | PASS (S2 contested, PM to rule) |
+| s17-t10-sa | 17 trial (v2, final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 8/8 | S2 contested as in t11 ($285 = 19 × $15, labeled inference; "18 days"); grader notes every earlier s17 trial carried the same derived figures and was scored 2/2 | 7/7 | PASS (S2 contested, PM to rule) |
+| s17-t12-sa | 17 trial (v2, final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 8/8 | S2 contested as in t10–t11 ("$30 to $285 a month (my arithmetic)", "18 days") | 7/7 | PASS (S2 contested, PM to rule) |
+| Gate s17 t10–t12 (final text) | 17 v2 | e2f6c61 | — | 2/2 in 3/3 (S2 under the "no invented number" reading) | 8/8 in 3/3 | none | 7/7 | GATE MET (3/3) if derived arithmetic is allowed under S2; under a literal S2 every s17 trial since the baseline fails |
+| s20-t4-sa | 20 trial (v2, final text) | e2f6c61 | PARTIAL / PARTIAL | 2/2 | 8/8 | none (B3 confirmed: thresholds file born 12:29:18, prototype 12:31:24) | 7/7 | PASS |
+| Gate s20 t4–t6 (final text) | 20 v2 | e2f6c61 | — | 2/2 in 3/3 | B3 2/3 (both passes confirmed by file order), B4 3/3, B5 3/3, B8 3/3 | B3 in t6 | 7/7 | GATE MET (PASS 3/3) |
