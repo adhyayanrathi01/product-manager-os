@@ -83,25 +83,29 @@ Do not block one skill because an unrelated source is unavailable.
 
 ## Choosing a path
 
-When `context.md` reads `Setup status: Incomplete` and the first prompt does not pick a path, offer two in one short message:
+When the `**Setup status:**` field in `context.md` is `Incomplete` and the first prompt neither picks a path nor asks a product question, offer two in one short message:
 
 1. **Try it now.** Name your company and its website. I read a few public pages, fill in your context, and you correct it.
 2. **Full setup.** Connect your tools and definitions so analytics, tickets, and meetings work. You can stop and resume.
 
 When the first prompt already picks one, say which path you are taking and start it. "Help me set it up" is full setup. "Here's my company" is the trial. Count anything the user already said as answered. Never re-offer a path the user declined.
 
+A first prompt that asks a product question is an active task. Start on it in just-in-time mode, setting up only what that question needs. Add one line saying the user can also try the workspace on their public pages first. Offer the trial only when a web-reading capability is available. Otherwise, say the trial is blocked and continue with full or just-in-time setup.
+
 ## Trial mode
 
+Trial mode replaces Process steps 3–9. Process steps 1, 2, and 10–12 still apply.
+
 1. Ask for the company name and website in one message, unless the user already gave them. If the name could match more than one company, read at most 3 pages and offer at most 5 candidates, each with a one-line reason. Wait for the user to confirm one.
-2. Run `analyze-product-context` in public mode on the user's product, with the purpose "workspace pre-fill". Read 3 or 4 first-party pages and at most 10 pages in total.
+2. Run `analyze-product-context` in public mode on the user's product, with the purpose "workspace pre-fill". Read 3 or 4 first-party pages and at most 10 pages in total, including any candidate-pass reads from step 1.
 3. Show a summary of at most 5 lines. Mark what was read and what was inferred, and list what could not be found. Treat corrections as expected.
 4. Rank the remaining unconfirmed items by impact times uncertainty. Ask at most 5 questions, one at a time, with the recommended answer first.
    - Recommend only from cited evidence.
    - For metrics, identity, permissions, and definitions, offer "leave as gap", never a guessed value.
    - "Yes" accepts the recommendation. "Stop" or "done" ends the loop.
    - Put unasked items in a Deferred list.
-5. Show the full profile before writing. Write `context.md` only after the user approves. Set `Setup status: Trial`. Tag values the user confirmed or corrected `confirmed`, and keep the rest `unconfirmed`.
-6. Record `public-web` as a source row with status `partial`. The pages read are its smoke test, with their absolute retrieval date.
+5. Show the full profile before writing. Write `context.md` only after the user approves, and set its `**Setup status:**` field to `Trial`. Tag a value `confirmed` only when the user checked or corrected that value. Approving the whole profile, or a yes given before a value was shown, does not confirm it. Keep every other value `unconfirmed`.
+6. Record `public-web` as a source row with status `partial`, because it covers public pages only: what the company publishes, not internal approval, usage, or support volume. The pages read are its smoke test, with their absolute retrieval date.
 7. Offer 3 starter questions answerable from public evidence. Each one says why it is a good start and which public evidence answers it. Add "ask your own".
    - Lean toward product questions: where reviewers get stuck, how plans compare with a confirmed alternative, or what shipped since a date and what the help docs say users struggle with.
    - Resolve every date to an absolute date.

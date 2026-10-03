@@ -2,16 +2,16 @@
 
 `./setup.sh` is optional. It makes skills callable by name, validates canonical skills, and creates repo-local discovery links without installing dependencies or storing connector secrets. `./setup.sh --check` is non-mutating.
 
+Use configure-workspace and ask one question at a time; do not require every field before providing value.
+
+For an active task, ask only for task-critical scope, sources, permissions, privacy constraints, and definitions. Provide a bounded provisional result and leave unrelated fields as gaps.
+
 ## Two ways to start
 
 - **Trial.** The user names their company. `configure-workspace` trial mode fills `context.md` from public pages, tagged `unconfirmed`, and the user corrects it. Skills that need private sources stay blocked until they are set up just in time.
 - **Full setup.** Follow the sequence below.
 
-If the first prompt does not pick one, offer both. If it does, start that path.
-
-Use configure-workspace and ask one question at a time; do not require every field before providing value.
-
-For an active task, ask only for task-critical scope, sources, permissions, privacy constraints, and definitions. Provide a bounded provisional result and leave unrelated fields as gaps.
+If the first prompt picks a path, start it. If it asks a product question, treat it as an active task and mention the trial in one line. Otherwise, offer both. Offer the trial only when a web-reading capability is available.
 
 ## Setup sequence
 
