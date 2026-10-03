@@ -18,7 +18,7 @@ description: "Create a testable product prototype from a PM-approved direction, 
 
 1. Confirm the selected direction, hypothesis, target users, scenario, and learning goal.
    - Tie the learning goal to a user behavior or a product metric.
-   - Set pass and fail thresholds and a disposal plan before building, and record them under Test scenario.
+   - Before creating any prototype file, write pass and fail thresholds and a disposal plan in the project, or in the prototype's destination folder when there is no project. Repeat them under Test scenario.
    - Test one hypothesis per prototype.
 2. Read the relevant project evidence and acceptance criteria.
 3. Locate the existing design system, product patterns, and brand guidance. Prefer reuse, then compose, then extend, then create, then feature-local. When the system cannot be verified, label design choices conditional.
@@ -35,11 +35,10 @@ description: "Create a testable product prototype from a PM-approved direction, 
    - Empty has three designs: never had data, filtered to zero, and cleared by the user.
 8. Show a visible "Sample data" label, and list synthetic values under Assumptions. Never show real-looking testimonials or logos, or any metric without that label. When asked for impressive numbers, explain that they would bias the test, propose labeled sample values, and let the PM choose. Use neutral styling or the existing design system unless the question is about visuals.
 9. Keep the prototype separate from production unless explicitly authorized. Never promote a prototype to production.
-10. Check only what the question puts in play: contrast of at least 4.5:1 for body text and 3:1 for large text and controls, visible focus, and states shown with the shortest and longest realistic values. Always add feasibility notes for engineering.
-    - Render at 375 and 1280 wide when a renderer is available, in at most 3 rounds, with one fix batch per round.
-    - Never install a renderer. When nothing renders, report confidence as partial.
+10. Check only what the question puts in play: contrast, visible focus, and states shown with the shortest and longest realistic values. Always add feasibility notes for engineering.
+    - Render at 375 and 1280 wide when a renderer is available, in at most 3 rounds, with one fix batch per round. Never install one; when nothing renders, report confidence as partial.
     - Mark each finding reproduced, not reproduced, or unknown. A skipped check is not a pass.
-    - Without a measuring tool, report contrast as unknown and quote no ratio, measured or target.
+    - Measure contrast only with a tool, against 4.5:1 for body text and 3:1 for large text and controls. Without one, report contrast as unknown and quote no ratio, measured or target.
     - Label any AI critique an expert-review hypothesis, not user evidence.
 11. Prepare a test scenario and concise handoff notes for engineering.
 12. Link the prototype and findings from the project and index.md.
