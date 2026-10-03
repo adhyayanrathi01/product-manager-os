@@ -88,11 +88,11 @@ When the `**Setup status:**` field in `context.md` is `Incomplete` and the first
 1. **Try it now.** Name your company and its website. I read a few public pages, fill in your context, and you correct it.
 2. **Full setup.** Connect your tools and definitions so analytics, tickets, and meetings work. You can stop and resume.
 
-When the first prompt already picks one, say which path you are taking and start it. "Help me set it up" is full setup. "Here's my company" is the trial. Count anything the user already said as answered. Never re-offer a path the user declined.
+When the first prompt already picks one, say which path you are taking and start it. "Help me set it up" is full setup. "Try it with my company" or "show me what it does first" is the trial. Naming the company inside a product question or task does not pick a path. Count anything the user already said as answered. Never re-offer a path the user declined.
 
-A path the user picks always wins, even when the prompt also asks a question. Otherwise, a first prompt that asks a product question or task is an active task: start on it in just-in-time mode, setting up only what it needs, and add one line saying the user can also try the workspace on their public pages first.
+A path the user picks always wins, even when the prompt also asks a question or gives a task. Otherwise, a first prompt that asks a product question or task is an active task: start on it in just-in-time mode, setting up only what it needs, and add one line saying the user can also try the workspace on their public pages first.
 
-Offer or start the trial only when a web-reading capability is available. Without one, say the trial is blocked and offer full setup instead.
+Offer or start the trial only when a web-reading capability is available. Without one, leave the trial out of any offer. If the user picked the trial, say it is blocked and offer full setup instead.
 
 ## Trial mode
 

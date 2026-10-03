@@ -8,10 +8,10 @@ For an active task, ask only for task-critical scope, sources, permissions, priv
 
 ## Two ways to start
 
-- **Trial.** The user names their company. `configure-workspace` trial mode fills `context.md` from public pages, tagged `unconfirmed`, and the user corrects it. Skills that need private sources stay blocked until they are set up just in time.
+- **Trial.** The user asks to try the workspace first and names their company. `configure-workspace` trial mode fills `context.md` from public pages, tagged `unconfirmed`, and the user corrects it. Skills that need private sources stay blocked until they are set up just in time.
 - **Full setup.** Follow the sequence below.
 
-If the first prompt picks a path, start it, even when it also asks a question. Otherwise, if it asks a product question or task, treat it as an active task and mention the trial in one line. Otherwise, offer both. Offer the trial only when a web-reading capability is available.
+If the first prompt picks a path, start it, even when it also asks a question or gives a task. Naming the company inside a product question does not pick the trial. Otherwise, if it asks a product question or task, treat it as an active task and mention the trial in one line. Otherwise, offer both. Offer the trial only when a web-reading capability is available.
 
 ## Setup sequence
 
