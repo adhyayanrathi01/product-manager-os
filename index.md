@@ -9,6 +9,7 @@
 | AGENTS.md | Canonical rules for agents |
 | CHARTER.md | Immutable clauses no skill or self-edit may contradict |
 | CHANGELOG.md | What changed in each version |
+| NOTICE.md | Short phrases that follow MIT-licensed sources, with their copyright notices |
 | core.sha256 | Integrity manifest over every immutable core region |
 | CLAUDE.md | Claude import of the canonical rules |
 | SETUP.md | Conversational first-use setup process |

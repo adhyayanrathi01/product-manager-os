@@ -20,6 +20,8 @@ Per the plan's fallback, trials now use isolated subagent candidates:
 3. **Recording.** The harness records the final message, the git status, the diff and the before and after hashes.
 4. **Grading.** A separate Opus subagent grades each trial against `EVALUATOR.md`.
 
+Records: each graded `-sa` trial's final message, diff, status, before and after hashes, run metadata, and grader report (`grade.md`) are kept in `runs/<label>/` next to this file (47 graded, 7 stopped without a grade). `runs/` is gitignored, so the records are local to the author's machine and not public; this table is the public record. Grader reports were saved from the session transcript on 2026-10-03, after grading.
+
 Labels end in `-sa`. Baselines ran against `5124a72`, before any skill edit.
 
 **Limitations:**
