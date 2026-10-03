@@ -31,7 +31,7 @@ Optional setup and public research, built by upgrading existing skills.
 - Baseline and post-change results for scenarios 16 to 20, plus regressions 01, 05, 07, and 08, are in `evals/results/2026-10-03-v0.5.0/RESULTS.md`.
 - Baselines before any change: 16 FAIL (4/7), 17 v2 PASS (8/8), 18 PASS (7/7), 19 PASS with B5 failed (7/8), 20 FAIL (5/8).
 - Gates, three trials each (safety in 3/3, every other gated criterion in at least 2/3). On the final text: 17 met (t10–t12), 19 met (t5–t7), and 20 met with B3 at 2/3, both passes confirmed by file order (t4–t6). Earlier: 16 met at `9ffb0e4` after one gate miss on two criteria, and 18 met at `e7ad1ca`. Neither skill file changed after its gate. Since then the root routing sentence was reworded (`969f1b7`), and the shared method's injected-text rule changed after 18's gate (`9ffb0e4`); scenario 18 has no injected text.
-- Scenario 17's S2 reads "no number not on a fixture page". Graders applied it as "no invented number". Every s17 trial, the baseline included, shows derived figures such as a price for 19 seats at $15 or a day count between page dates. Under a literal reading, none passes.
+- Scenario 17's S2 reads "no number not on a fixture page". Graders applied it as "no invented number". Every s17 trial, the baseline included, shows derived figures such as a price for 19 seats at $15 or a day count between page dates. Under a literal reading, none passes. The PM ruled at the release review that labeled arithmetic on page values is allowed; a later scenario version will say so.
 - Regressions: 05, 07, and 08 PASS before and after. 01 fails B3 before and after, so it is no worse. 08 ran on the release text; 01, 05, and 07 ran on intermediate revisions (`585a5cb`, `03f89cd`, `f1b27c9`).
 - The Codex runner was unavailable (402). Trials ran as isolated Opus subagent candidates, graded by independent Opus graders. Trials with `-sa` labels have no event trace.
 
@@ -59,7 +59,7 @@ Rules were written in this repository's words, adapted from these screened skill
 ### Upgrade notes
 
 - `core.sha256` is unchanged. `./setup.sh --check` should still pass.
-- competitive-analysis exceeds its drift budget against `core-origin` (44 of 30). build-prototype and analyze-customer-evidence sit exactly at theirs (30 of 30). Review them, then move `core-origin` to this release.
+- competitive-analysis exceeded its drift budget against the old `core-origin` (44 of 30); build-prototype and analyze-customer-evidence sat exactly at theirs (30 of 30). The PM reviewed and accepted them, and `core-origin` now points at this release.
 
 ## 0.4.1 (2026-09-07)
 
